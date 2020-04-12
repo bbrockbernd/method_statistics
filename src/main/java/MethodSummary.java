@@ -1,3 +1,4 @@
+import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiMethod;
 
 public class MethodSummary {
@@ -10,6 +11,12 @@ public class MethodSummary {
 
     public String getName() {return method.getName();}
 
-    
+    public String getAnnotations() {
+        String result = "";
+        for(PsiAnnotation annotation: method.getAnnotations()) {
+            result += annotation.getQualifiedName() + "\n";
+        }
+        return result;
+    }
 
 }
