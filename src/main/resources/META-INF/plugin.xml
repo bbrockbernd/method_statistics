@@ -1,15 +1,16 @@
 <idea-plugin>
     <id>org.project.jetbrains.method_statistics</id>
-    <name>Plugin display name here</name>
-    <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+    <name>Methods Statistics</name>
+    <vendor email="group@yourcompany.com" url="http://www.mycompany.com">MyCompany</vendor>
 
     <description><![CDATA[
-    Enter short description for your plugin here.<br>
-    <em>most HTML tags may be used</em>
+    Plugin that shows the methods' statistics.
     ]]></description>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
+
+    <depends>com.intellij.modules.java</depends>
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
@@ -18,5 +19,8 @@
 
     <actions>
         <!-- Add your actions here -->
+        <action id="StatisticsAction" class="StatisticsAction" text="Methods Statistics" description="stats">
+            <add-to-group group-id="ToolsMenu" anchor="first"/>
+        </action>
     </actions>
 </idea-plugin>
