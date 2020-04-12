@@ -34,10 +34,12 @@ public class MethodSummary {
     public String createSummary() {
         String result = "";
 
-        result += getName() + ":\n\n";
+        result += getName() + ":\n";
 
-        result += "Annotations:\n";
-        result += getAnnotations();
+        if(!getAnnotations().isEmpty()) {
+            result += "Annotations:\n";
+            result += getAnnotations();
+        }
 
         return result;
 
