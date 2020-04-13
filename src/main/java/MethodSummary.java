@@ -39,8 +39,12 @@ public class MethodSummary {
      * @return the lines of code of the actual method.
      */
     public int computeLOC() {
+        if (method.getBody().isEmpty()) return 0;
         String body = method.getBody().getText();
-        return StringUtils.countMatches(body, "\n") - 1;
+        System.out.println(body);
+        int newLines = StringUtils.countMatches(body, "\n");
+        if (newLines <= 1) return 1;
+        return newLines;
     }
 
     @Override
