@@ -9,25 +9,16 @@ public class MethodSummary {
 
     private String name;
     private String[] annotations;
-    private int LOC;
+    private int LOC = 0;
     private int CC;
 
     public MethodSummary(PsiMethod method) {
         this.method = method;
         name = method.getName();
         extractAnnotations();
-        computeLOC();
-        computeCC();
-    }
-
-    //TODO
-    private void computeCC() {
-        CC = 0;
-    }
-
-    //TODO
-    private void computeLOC() {
-        LOC = 0;
+        MethodVisitor visitor = new MethodVisitor();
+        method.accept(visitor);
+        CC = visitor.getCC();
     }
 
     /**
