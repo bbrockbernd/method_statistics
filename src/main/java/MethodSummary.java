@@ -9,7 +9,9 @@ public class MethodSummary {
 
     private String name;
     private String modifiers;
-    private String parameter_list;
+    private String parameterList;
+    private String returnType;
+    private String signature;
     private String[] annotations;
     private int LOC;
     private int CC;
@@ -19,7 +21,9 @@ public class MethodSummary {
         name = method.getName();
         extractModifiers();
         extractParameters();
+        extractReturnType();
         extractAnnotations();
+        buildSignature();
         MethodVisitor visitor = new MethodVisitor();
         method.accept(visitor);
         CC = visitor.getCC();
@@ -27,10 +31,27 @@ public class MethodSummary {
     }
 
     /**
+     * put all extracted info into a complete method signature
+     */
+    public void buildSignature() {
+        signature = modifiers + " " + returnType + " " + name + parameterList;
+    }
+
+    /**
+     * extract returnType as single String
+     */
+    public void extractReturnType() {
+        returnType = "void";
+        PsiType type = method.getReturnType();
+        if(type == null) return;
+        returnType = type.getPresentableText();
+    }
+
+    /**
      * extract method parameter as single String
      */
     public void extractParameters() {
-        parameter_list = method.getParameterList().getText();
+        parameterList = method.getParameterList().getText();
     }
 
     /**
@@ -66,7 +87,7 @@ public class MethodSummary {
 
     @Override
     public String toString() {
-        return modifiers + " name='" + name + '\'' + parameter_list +
+        return signature +
                 ", annotations=" + Arrays.toString(annotations) +
                 ", LOC=" + LOC +
                 ", CC=" + CC;
