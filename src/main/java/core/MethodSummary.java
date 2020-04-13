@@ -1,10 +1,8 @@
-import com.intellij.psi.*;
-import org.apache.commons.lang.StringUtils;
+package core;
 
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiMethod;
 import java.util.Arrays;
-import org.apache.commons.lang.StringUtils;
 
 /**
  * Method data object for storing relevant method data for the plugin.
@@ -37,13 +35,14 @@ public class MethodSummary {
     public void extractAnnotations() {
         int i = 0;
         annotations = new String[method.getAnnotations().length];
-        for(PsiAnnotation annotation: method.getAnnotations()) {
+        for (PsiAnnotation annotation : method.getAnnotations()) {
             annotations[i++] = annotation.getText();
         }
     }
 
     /**
      * The LOC includes the signature of the method.
+     *
      * @return the lines of code of the actual method.
      */
     public int computeLOC() {
