@@ -1,4 +1,5 @@
-package core;
+import com.intellij.psi.*;
+import org.apache.commons.lang.StringUtils;
 
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiMethod;
@@ -36,25 +37,35 @@ public class MethodSummary {
     public void extractAnnotations() {
         int i = 0;
         annotations = new String[method.getAnnotations().length];
-        for (PsiAnnotation annotation : method.getAnnotations()) {
+        for(PsiAnnotation annotation: method.getAnnotations()) {
             annotations[i++] = annotation.getText();
         }
     }
 
     /**
+     * The LOC includes the signature of the method.
      * @return the lines of code of the actual method.
      */
     public int computeLOC() {
-        if (method.getBody().isEmpty()) {
-            return 0;
+        String text = method.getBody().getText();
+        int lines = 0;
+        boolean emptyLine = true;
+        final char[] chars = text.toCharArray();
+
+        for (final char c : chars) {
+            if (c == '\n' || c == '\r') {
+                if (!emptyLine) {
+                    lines++;
+                    emptyLine = true;
+                }
+            } else if (c != ' ' && c != '\t') {
+                emptyLine = false;
+            }
         }
-        String body = method.getBody().getText();
-        System.out.println(body);
-        int newLines = StringUtils.countMatches(body, "\n");
-        if (newLines <= 1) {
-            return 1;
+        if (!emptyLine) {
+            lines++;
         }
-        return newLines;
+        return lines;
     }
 
     @Override
