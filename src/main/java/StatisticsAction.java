@@ -3,71 +3,74 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.*;
-
+import com.intellij.openapi.wm.ToolWindow;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiJavaFile;
+import com.intellij.psi.PsiManager;
+import com.intellij.psi.PsiMethod;
+import com.intellij.psi.PsiRecursiveElementVisitor;
+import gui.MethodItem;
+import gui.StatisticsToolWindow;
 import java.util.ArrayList;
 import java.util.List;
 
 public class StatisticsAction extends AnAction {
 
-        @Override
-        public void actionPerformed(AnActionEvent event) {
-            // Using the event, create and show a dialog
-            Project currentProject = event.getProject();
-            StringBuffer dlgMsg = new StringBuffer(event.getPresentation().getText());
-            String dlgTitle = event.getPresentation().getDescription();
+    private StatisticsToolWindow toolWindow;
 
-            //get opened file in the editor
-            VirtualFile[] files = FileEditorManager.getInstance(currentProject).getSelectedFiles();
+    @Override
+    public void actionPerformed(AnActionEvent event) {
+        // Using the event, create and show a dialog
+        Project currentProject = event.getProject();
+        //get opened file in the editor
+        VirtualFile[] files = FileEditorManager.getInstance(currentProject).getSelectedFiles();
 
-            PsiFile currentFile = PsiManager.getInstance(currentProject).findFile(files[0]);
-
-            //display project name and open file
-            if (currentProject != null) {
-                dlgMsg.append(String.format("\nSelected Project: %s", currentProject.getName()));
-                dlgMsg.append(String.format("\nFile opened now in the editor: %s", files));
+        PsiFile currentFile = PsiManager.getInstance(currentProject).findFile(files[0]);
+        //display methods name if the opened file is a Java file
+        if (currentFile instanceof PsiJavaFile) {
+            PsiJavaFile currentJavaFile = (PsiJavaFile) currentFile;
+            Visitor visitor = new Visitor();
+            currentJavaFile.accept(visitor);
+            List<MethodItem> methodItems = new ArrayList<>();
+            for (PsiMethod m : visitor.getPsiMethods()) {
+                methodItems.add(new MethodItem(m.getName(), "d", "c", "l", "sig", m));
             }
-            //display methods name if the opened file is a Java file
-            if(currentFile instanceof PsiJavaFile) {
-                Visitor visitor = new Visitor();
-                currentFile.accept(visitor);
-                String methods = "";
-                for(PsiMethod m : visitor.getPsiMethods()) {
-                    methods += m.getName() + " ";
-                }
-                dlgMsg.append(String.format("\nMethods in this Java class: %s", methods));
-            }
-
-            Messages.showMessageDialog(currentProject, dlgMsg.toString(), dlgTitle, Messages.getInformationIcon());
-        }
-
-        @Override
-        public void update(AnActionEvent e) {
-            // Set the availability based on whether a project is open
-            Project project = e.getProject();
-            e.getPresentation().setEnabledAndVisible(project != null);
-            e.getPresentation().setIcon(AllIcons.Ide.Rating);
+            getToolWindow(currentProject).ShowWindow(currentJavaFile.getClasses()[0].getName(), methodItems);
         }
     }
 
-    class Visitor extends PsiRecursiveElementVisitor {
-
-        private List<PsiMethod> psiMethods = new ArrayList<PsiMethod>();
-
-        @Override
-        public void visitElement(PsiElement element) {
-
-            if (element instanceof PsiMethod) {
-                psiMethods.add((PsiMethod) element);
-            }
-
-            super.visitElement(element);
-        }
-
-        public List<PsiMethod> getPsiMethods() {
-            return psiMethods;
-        }
+    @Override
+    public void update(AnActionEvent e) {
+        // Set the availability based on whether a project is open
+        Project project = e.getProject();
+        e.getPresentation().setEnabledAndVisible(project != null);
+        e.getPresentation().setIcon(AllIcons.Ide.Rating);
     }
+
+    StatisticsToolWindow getToolWindow(Project project) {
+        if(toolWindow == null) toolWindow = new StatisticsToolWindow(project);
+        return toolWindow;
+    }
+}
+
+class Visitor extends PsiRecursiveElementVisitor {
+
+    private List<PsiMethod> psiMethods = new ArrayList<PsiMethod>();
+
+    @Override
+    public void visitElement(PsiElement element) {
+
+        if (element instanceof PsiMethod) {
+            psiMethods.add((PsiMethod) element);
+        }
+
+        super.visitElement(element);
+    }
+
+    public List<PsiMethod> getPsiMethods() {
+        return psiMethods;
+    }
+}
 
