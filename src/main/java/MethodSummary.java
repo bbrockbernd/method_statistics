@@ -1,5 +1,4 @@
 import com.intellij.psi.*;
-import org.apache.commons.lang.StringUtils;
 
 import java.util.Arrays;
 
@@ -35,16 +34,29 @@ public class MethodSummary {
     }
 
     /**
-     *
+     * The LOC includes the signature of the method.
      * @return the lines of code of the actual method.
      */
     public int computeLOC() {
-        if (method.getBody().isEmpty()) return 0;
-        String body = method.getBody().getText();
-        System.out.println(body);
-        int newLines = StringUtils.countMatches(body, "\n");
-        if (newLines <= 1) return 1;
-        return newLines;
+        String text = method.getBody().getText();
+        int lines = 0;
+        boolean emptyLine = true;
+        final char[] chars = text.toCharArray();
+
+        for (final char c : chars) {
+            if (c == '\n' || c == '\r') {
+                if (!emptyLine) {
+                    lines++;
+                    emptyLine = true;
+                }
+            } else if (c != ' ' && c != '\t') {
+                emptyLine = false;
+            }
+        }
+        if (!emptyLine) {
+            lines++;
+        }
+        return lines;
     }
 
     @Override
