@@ -1,17 +1,24 @@
-package core;
-import com.intellij.psi.*;
+import com.intellij.psi.PsiConditionalExpression;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.PsiForStatement;
+import com.intellij.psi.PsiForeachStatement;
+import com.intellij.psi.PsiIfStatement;
+import com.intellij.psi.PsiStatement;
+import com.intellij.psi.PsiTryStatement;
+import com.intellij.psi.PsiWhileStatement;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.jetbrains.annotations.NotNull;
 
-class MethodVisitor extends PsiRecursiveElementWalkingVisitor {
+class MethodVisitor extends PsiElementVisitor {
 
-    private int CC = 1;
+    private int cc = 1;
 
-    private List<PsiStatement> psiStatements = new ArrayList<>();
+    private List<PsiStatement> psiStatements = new ArrayList<PsiStatement>();
 
     @Override
-    public void visitElement(@NotNull PsiElement element) {
+    public void visitElement(PsiElement element) {
 
         //remember all the statements
         if (element instanceof PsiStatement) {
@@ -26,7 +33,7 @@ class MethodVisitor extends PsiRecursiveElementWalkingVisitor {
                 || element instanceof PsiWhileStatement
                 || element instanceof PsiConditionalExpression
                 || element instanceof PsiTryStatement) {
-            CC++;
+            cc++;
         }
 
         super.visitElement(element);
@@ -36,7 +43,7 @@ class MethodVisitor extends PsiRecursiveElementWalkingVisitor {
         return psiStatements;
     }
 
-    public int getCC() {
-        return CC;
+    public int getCc() {
+        return cc;
     }
 }
