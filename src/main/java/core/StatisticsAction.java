@@ -33,14 +33,9 @@ public class StatisticsAction extends AnAction {
         //display methods name if the opened file is a Java file
         if (currentFile instanceof PsiJavaFile) {
             PsiJavaFile currentJavaFile = (PsiJavaFile) currentFile;
-            ClassVisitor visitor = new ClassVisitor();
-            currentFile.accept(visitor);
-            List<MethodSummary> methodList = new ArrayList<>();
-            for (PsiMethod m : visitor.getPsiMethods()) {
-                methodList.add(new MethodSummary(m));
-            }
+            ClassSummary classSummary = new ClassSummary(currentJavaFile);
             getToolWindow(currentProject)
-                .ShowWindow(currentJavaFile.getClasses()[0].getName(), methodList);
+                .ShowWindow(currentJavaFile.getClasses()[0].getName(), classSummary.getMethodsList());
         }
     }
 

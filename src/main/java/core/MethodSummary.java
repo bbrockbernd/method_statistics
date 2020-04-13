@@ -75,5 +75,33 @@ public class MethodSummary {
             ", LOC=" + LOC +
             ", CC=" + CC;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getCC() {
+        return CC;
+    }
+
+    public int getLOC() {
+        return LOC;
+    }
+
+    public String getReturnType() {
+        return returnType;
+    }
+
+    public PsiMethod getMethod() {
+        return method;
+    }
+
+    public int getParams() {
+        return params;
+    }
+
+    public String[] getAnnotations() {
+        return annotations;
+    }
 }
 
