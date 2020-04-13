@@ -1,11 +1,12 @@
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiRecursiveElementVisitor;
+import com.intellij.psi.PsiRecursiveElementWalkingVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class ClassVisitor extends PsiRecursiveElementVisitor {
+class ClassVisitor extends PsiRecursiveElementWalkingVisitor {
 
     private List<PsiMethod> psiMethods = new ArrayList<PsiMethod>();
 
