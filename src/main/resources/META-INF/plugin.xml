@@ -19,7 +19,7 @@
 
     <actions>
         <!-- Add your actions here -->
-        <action id="StatisticsAction" class="StatisticsAction" text="Methods Statistics" description="stats">
+        <action id="core.StatisticsAction" class="core.StatisticsAction" text="Methods Statistics" description="stats">
             <add-to-group group-id="ToolsMenu" anchor="first"/>
         </action>
     </actions>

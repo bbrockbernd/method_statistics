@@ -1,48 +1,50 @@
+package core;
+
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.PsiMethod;
 
+import gui.StatisticsToolWindow;
+import java.util.ArrayList;
+import java.util.List;
+
 public class StatisticsAction extends AnAction {
 
+    private StatisticsToolWindow toolWindow;
+
+    /**
+     * Event listener for the method statistics tool.
+     * @param event ActionEvent
+     */
     @Override
     public void actionPerformed(AnActionEvent event) {
         // Using the event, create and show a dialog
         Project currentProject = event.getProject();
-        StringBuffer dlgMsg = new StringBuffer(event.getPresentation().getText());
-        String dlgTitle = event.getPresentation().getDescription();
 
         //get opened file in the editor
         VirtualFile[] files = FileEditorManager.getInstance(currentProject).getSelectedFiles();
 
         PsiFile currentFile = PsiManager.getInstance(currentProject).findFile(files[0]);
 
-        //display project name and open file
-        if (currentProject != null) {
-            dlgMsg.append(String.format("\nSelected Project: %s", currentProject.getName()));
-            dlgMsg.append(String.format("\nFile opened now in the editor: %s", files));
-        }
         //display methods name if the opened file is a Java file
         if (currentFile instanceof PsiJavaFile) {
+            PsiJavaFile currentJavaFile = (PsiJavaFile) currentFile;
             ClassVisitor visitor = new ClassVisitor();
             currentFile.accept(visitor);
-            String methods = "";
+            List<MethodSummary> methodList = new ArrayList<>();
             for (PsiMethod m : visitor.getPsiMethods()) {
-                MethodSummary methodSummary = new MethodSummary(m);
-                methods += methodSummary.toString() + "\n\n";
+                methodList.add(new MethodSummary(m));
             }
-            dlgMsg.append(String.format("\nMethods in this Java class: %s", methods));
+            getToolWindow(currentProject)
+                .ShowWindow(currentJavaFile.getClasses()[0].getName(), methodList);
         }
-
-        Messages.showMessageDialog(currentProject, dlgMsg.toString(),
-                dlgTitle, Messages.getInformationIcon());
     }
 
     @Override
@@ -51,6 +53,19 @@ public class StatisticsAction extends AnAction {
         Project project = e.getProject();
         e.getPresentation().setEnabledAndVisible(project != null);
         e.getPresentation().setIcon(AllIcons.Ide.Rating);
+    }
+
+    /**
+     * Makes sure only one instance of the toolwindow is available.
+     * Is easier to test than a singleton.
+     * @param project CurrentProject
+     * @return toolWindow
+     */
+    StatisticsToolWindow getToolWindow(Project project) {
+        if (toolWindow == null) {
+            toolWindow = new StatisticsToolWindow(project);
+        }
+        return toolWindow;
     }
 }
 
