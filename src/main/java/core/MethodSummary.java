@@ -150,12 +150,12 @@ public class MethodSummary {
     }
 
     public int getLOC() {
-        return LOC;
+        return loc;
     }
 
 
     public int getCC() {
-        return CC;
+        return cc;
     }
 }
 
