@@ -145,5 +145,17 @@ public class MethodSummary {
                 + ", CC=" + cc;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getLOC() {
+        return LOC;
+    }
+
+
+    public int getCC() {
+        return CC;
+    }
 }
 
