@@ -1,20 +1,22 @@
 package gui;
 
 import com.intellij.util.ui.ColumnInfo;
+import java.util.Comparator;
 import org.jetbrains.annotations.Nullable;
 
 class ColumnInfoFactory {
+
     public ColumnInfo[] getColumnInfos() {
         return new ColumnInfo[] {
             new NameInfo(),
-            new DescriptionInfo(),
             new CCInfo(),
             new LOCInfo(),
-            new SignaturesInfo()
+            new ParamInfo(),
+            new ReturnInfo()
         };
     }
 
-    static class NameInfo extends ColumnInfo<MethodItem, String> {
+    static class NameInfo extends ColumnInfo<MethodSummary, String> {
 
         public NameInfo() {
             super("Name");
@@ -22,25 +24,18 @@ class ColumnInfoFactory {
 
         @Nullable
         @Override
-        public String valueOf(MethodItem methodItem) {
+        public String valueOf(MethodSummary methodItem) {
             return methodItem.name;
-        }
-    }
-
-    static class DescriptionInfo extends ColumnInfo<MethodItem, String> {
-
-        public DescriptionInfo() {
-            super("Description");
         }
 
         @Nullable
         @Override
-        public String valueOf(MethodItem methodItem) {
-            return methodItem.description;
+        public Comparator<MethodSummary> getComparator() {
+            return Comparator.comparing(o -> o.name);
         }
     }
 
-    static class CCInfo extends ColumnInfo<MethodItem, String> {
+    static class CCInfo extends ColumnInfo<MethodSummary, String> {
 
         public CCInfo() {
             super("CC");
@@ -48,12 +43,18 @@ class ColumnInfoFactory {
 
         @Nullable
         @Override
-        public String valueOf(MethodItem methodItem) {
-            return methodItem.CC;
+        public String valueOf(MethodSummary methodItem) {
+            return Integer.toString(methodItem.CC);
+        }
+
+        @Nullable
+        @Override
+        public Comparator<MethodSummary> getComparator() {
+            return Comparator.comparingInt(o -> o.CC);
         }
     }
 
-    static class LOCInfo extends ColumnInfo<MethodItem, String> {
+    static class LOCInfo extends ColumnInfo<MethodSummary, String> {
 
         public LOCInfo() {
             super("LOC");
@@ -61,21 +62,52 @@ class ColumnInfoFactory {
 
         @Nullable
         @Override
-        public String valueOf(MethodItem methodItem) {
-            return methodItem.LOC;
-        }
-    }
-
-    static class SignaturesInfo extends ColumnInfo<MethodItem, String> {
-
-        public SignaturesInfo() {
-            super("Signatures");
+        public String valueOf(MethodSummary methodItem) {
+            return Integer.toString(methodItem.LOC);
         }
 
         @Nullable
         @Override
-        public String valueOf(MethodItem methodItem) {
-            return methodItem.signatures;
+        public Comparator<MethodSummary> getComparator() {
+            return Comparator.comparingInt(o -> o.LOC);
+        }
+    }
+
+    static class ParamInfo extends ColumnInfo<MethodSummary, String> {
+
+        public ParamInfo() {
+            super("Parameter Size");
+        }
+
+        @Nullable
+        @Override
+        public String valueOf(MethodSummary methodSummary) {
+            return Integer.toString(methodSummary.params);
+        }
+
+        @Nullable
+        @Override
+        public Comparator<MethodSummary> getComparator() {
+            return Comparator.comparingInt(o -> o.params);
+        }
+    }
+
+    static class ReturnInfo extends ColumnInfo<MethodSummary, String> {
+
+        public ReturnInfo() {
+            super("Return Type");
+        }
+
+        @Nullable
+        @Override
+        public String valueOf(MethodSummary methodItem) {
+            return methodItem.returnType;
+        }
+
+        @Nullable
+        @Override
+        public Comparator<MethodSummary> getComparator() {
+            return Comparator.comparing(o -> o.returnType);
         }
     }
 }

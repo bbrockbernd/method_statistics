@@ -27,17 +27,17 @@ public class StatisticsToolWindow {
             .registerToolWindow("Method Statistics", true, ToolWindowAnchor.BOTTOM);
     }
 
-    public void ShowWindow(String className, List<MethodItem> methodItems) {
+    public void ShowWindow(String className, List<MethodSummary> methodItems) {
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
-        ListTableModel<MethodItem> model = new ListTableModel<>(
+        ListTableModel<MethodSummary> model = new ListTableModel<>(
             new ColumnInfoFactory().getColumnInfos(), methodItems);
         JBTable table = new JBTable(model);
         table.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                    int index = table.getSelectedRow();
-                    PsiMethod method = methodItems.get(index).psiMethod;
+                    int index = table.convertRowIndexToModel(table.getSelectedRow());
+                    PsiMethod method = methodItems.get(index).method;
                     method.navigate(true);
                 }
             }
@@ -48,8 +48,13 @@ public class StatisticsToolWindow {
         JLabel temp = new JLabel("Extended method info");
         splitterPane.setSecondComponent(temp);
 
-        Content content = contentFactory.createContent(splitterPane, className, false);
-        toolWindow.getContentManager().addContent(content);
+        Content content;
+        if((content = toolWindow.getContentManager().findContent(className)) != null){
+            content.setComponent(splitterPane);
+        } else {
+            content = contentFactory.createContent(splitterPane, className, false);
+            toolWindow.getContentManager().addContent(content);
+        }
         toolWindow.getContentManager().setSelectedContent(content);
         toolWindow.show();
     }

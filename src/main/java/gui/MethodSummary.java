@@ -1,12 +1,24 @@
+package gui;
+
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiMethod;
 
 public class MethodSummary {
 
-    private PsiMethod method;
+    public String name;
+    public int CC;
+    public int LOC;
+    public String returnType;
+    public PsiMethod method;
+    public int params;
 
     public MethodSummary(PsiMethod method) {
         this.method = method;
+        this.name = method.getName();
+        this.params = method.getParameters().length;
+        this.CC = 0;
+        this.LOC = 0;
+        this.returnType = method.getReturnType().getPresentableText();
     }
 
     /**
