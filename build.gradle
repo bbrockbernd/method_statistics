@@ -17,8 +17,9 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
-    compile files('lib/xchart-3.6.2.jar')
-    compile files('lib/xchart-demo-3.6.2.jar')
+    compile group: 'org.knowm.xchart', name: 'xchart', version: '3.6.2'
+    compile group: 'org.knowm.xchart', name: 'xchart-demo', version: '3.6.2'
+
 }
 
 test {
