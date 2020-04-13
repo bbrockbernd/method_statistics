@@ -17,7 +17,7 @@ public class ColumnInfoFactoryTest extends TestCase {
     }
     @Test
     void nameTest(){
-        assertEquals("Name", infos[0].getName());
+        assertEquals("Nae", infos[0].getName());
     }
 
     @Test
