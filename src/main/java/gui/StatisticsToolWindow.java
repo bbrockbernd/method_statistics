@@ -11,12 +11,12 @@ import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import com.intellij.ui.table.JBTable;
 import com.intellij.util.ui.ListTableModel;
+import core.ClassSummary;
 import core.MethodSummary;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 
 /**
  * This is the graphical report of the method statistics plugin.
@@ -35,16 +35,15 @@ public class StatisticsToolWindow {
     /**
      * Add content to the tool window.
      * @param className The name of the analyzed java class.
-     * @param methodItems The Methods found of the analyzed java class.
+     * @param classItem The class summary found of the analyzed java class.
      */
-    public void ShowWindow(String className, List<MethodSummary> methodItems) {
+    public void ShowWindow(String className, ClassSummary classItem) {
         //Splitter pane splits the tool window
         JBSplitter splitterPane = new JBSplitter(false);
-        splitterPane.setFirstComponent(generateTable(methodItems));
+        splitterPane.setFirstComponent(generateTable(classItem.getMethodsList()));
 
-        //TODO add extended method info
-        JLabel temp = new JLabel("TODO extended info");
-        splitterPane.setSecondComponent(temp);
+        //PieCharts as right component
+        splitterPane.setSecondComponent(classItem.getChartsPanel());
 
         Content content;
         if((content = toolWindow.getContentManager().findContent(className)) != null){

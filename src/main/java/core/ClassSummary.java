@@ -2,9 +2,8 @@ package core;
 
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiMethod;
-import core.PieChart;
 
-import java.util.ArrayList;
+import javax.swing.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,7 +13,7 @@ public class ClassSummary {
 
     private String name;
     private MethodSummary[] methods;
-    private PieChart chart;
+    private JPanel chartsPanel;
 
     public ClassSummary(PsiJavaFile file) {
         this.file = file;
@@ -27,15 +26,19 @@ public class ClassSummary {
             MethodSummary methodSummary = new MethodSummary(m);
             methods[i++] = methodSummary;
         }
-        chart = new PieChart(methods);
+        chartsPanel = new ChartFactory(methods).getPanel();
     }
 
     @Override
     public String toString() {
-        return "\ncore.ClassSummary{" +
+        return "\nClassSummary{" +
                 "name='" + name + '\'' +
                 ", methods=" + Arrays.toString(methods) +
                 '}';
+    }
+
+    public JPanel getChartsPanel() {
+        return chartsPanel;
     }
 
     public List<MethodSummary> getMethodsList() {

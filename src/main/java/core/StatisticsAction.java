@@ -35,7 +35,7 @@ public class StatisticsAction extends AnAction {
             PsiJavaFile currentJavaFile = (PsiJavaFile) currentFile;
             ClassSummary classSummary = new ClassSummary(currentJavaFile);
             getToolWindow(currentProject)
-                .ShowWindow(currentJavaFile.getClasses()[0].getName(), classSummary.getMethodsList());
+                .ShowWindow(currentJavaFile.getClasses()[0].getName(), classSummary);
         }
     }
 

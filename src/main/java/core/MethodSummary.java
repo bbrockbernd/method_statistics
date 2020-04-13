@@ -145,5 +145,8 @@ public class MethodSummary {
     }
 
 
+    public int getCC() {
+        return CC;
+    }
 }
 
