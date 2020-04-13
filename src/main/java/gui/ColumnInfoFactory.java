@@ -84,19 +84,19 @@ class ColumnInfoFactory {
     static class ParamInfo extends ColumnInfo<MethodSummary, String> {
 
         public ParamInfo() {
-            super("Parameter Size");
+            super("Parameters");
         }
 
         @Nullable
         @Override
         public String valueOf(MethodSummary methodSummary) {
-            return Integer.toString(methodSummary.params);
+            return methodSummary.parameterList;
         }
 
         @Nullable
         @Override
         public Comparator<MethodSummary> getComparator() {
-            return Comparator.comparingInt(o -> o.params);
+            return Comparator.comparingInt(o -> o.parameterSize);
         }
     }
 

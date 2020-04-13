@@ -2,6 +2,9 @@ package core;
 
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiMethod;
+import com.intellij.psi.PsiType;
+import com.intellij.psi.javadoc.PsiDocComment;
+
 import java.util.Arrays;
 
 /**
@@ -9,21 +12,29 @@ import java.util.Arrays;
  */
 public class MethodSummary {
 
-    public String name;
-    public int CC;
-    public int LOC;
-    public String returnType;
     public PsiMethod method;
-    public int params;
+
+    public String name;
+    public String modifiers;
+    public String parameterList;
+    public String returnType;
+    public String signature;
     public String[] annotations;
+    public String documentation;
+    public int parameterSize;
+    public int LOC;
+    public int CC;
 
     public MethodSummary(PsiMethod method) {
         this.method = method;
-        this.name = method.getName();
-        this.params = method.getParameters().length;
-        if(method.getReturnType() != null)
-            this.returnType = method.getReturnType().getPresentableText();
+        name = method.getName();
+        extractModifiers();
+        extractParameters();
+        extractReturnType();
         extractAnnotations();
+        buildSignature();
+        extractDescription();
+        extractParametersSize();
         MethodVisitor visitor = new MethodVisitor();
         method.accept(visitor);
         CC = visitor.getCC();
@@ -31,7 +42,55 @@ public class MethodSummary {
     }
 
     /**
-     * extract annotations as string array
+     * Extract method description as single String.
+     */
+    public void extractDescription() {
+        documentation = "no description";
+        PsiDocComment doc = method.getDocComment();
+        if(doc == null) return;
+        documentation = doc.getText();
+    }
+
+    /**
+     * Put all extracted info into a complete method signature.
+     */
+    public void buildSignature() {
+        signature = modifiers + " " + returnType + " " + name + parameterList;
+    }
+
+    /**
+     * Extract returnType as single String.
+     */
+    public void extractReturnType() {
+        returnType = "void";
+        PsiType type = method.getReturnType();
+        if(type == null) return;
+        returnType = type.getPresentableText();
+    }
+
+    /**
+     * Extract method parameter as single String.
+     */
+    public void extractParameters() {
+        parameterList = method.getParameterList().getText();
+    }
+
+    /**
+     * Extract method parameters size as single int.
+     */
+    public void extractParametersSize() {
+        parameterSize = method.getParameters().length;
+    }
+
+    /**
+     * Extract method modifiers as single String.
+     */
+    public void extractModifiers() {
+        modifiers = method.getModifierList().getText();
+    }
+
+    /**
+     * Extract annotations as string array.
      */
     public void extractAnnotations() {
         int i = 0;
@@ -70,10 +129,12 @@ public class MethodSummary {
 
     @Override
     public String toString() {
-        return "name='" + name + '\'' +
-            ", annotations=" + Arrays.toString(annotations) +
-            ", LOC=" + LOC +
-            ", CC=" + CC;
+        return signature +
+                ", annotations=" + Arrays.toString(annotations) +
+                ", description=" + documentation +
+                ", LOC=" + LOC +
+                ", CC=" + CC;
     }
+
 }
 
