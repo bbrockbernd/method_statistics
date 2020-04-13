@@ -6,7 +6,10 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.*;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiJavaFile;
+import com.intellij.psi.PsiManager;
+import com.intellij.psi.PsiMethod;
 
 import gui.StatisticsToolWindow;
 import java.util.ArrayList;
@@ -59,8 +62,9 @@ public class StatisticsAction extends AnAction {
      * @return toolWindow
      */
     StatisticsToolWindow getToolWindow(Project project) {
-        if (toolWindow == null)
+        if (toolWindow == null) {
             toolWindow = new StatisticsToolWindow(project);
+        }
         return toolWindow;
     }
 }
