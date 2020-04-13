@@ -9,6 +9,7 @@ public class MethodSummary {
 
     private String name;
     private String modifiers;
+    private String parameter_list;
     private String[] annotations;
     private int LOC;
     private int CC;
@@ -17,6 +18,7 @@ public class MethodSummary {
         this.method = method;
         name = method.getName();
         extractModifiers();
+        extractParameters();
         extractAnnotations();
         MethodVisitor visitor = new MethodVisitor();
         method.accept(visitor);
@@ -24,12 +26,21 @@ public class MethodSummary {
         LOC = computeLOC();
     }
 
+    /**
+     * extract method parameter as single String
+     */
+    public void extractParameters() {
+        parameter_list = method.getParameterList().getText();
+    }
+
+    /**
+     * extract method modifiers as single String
+     */
     public void extractModifiers() {
         modifiers = method.getModifierList().getText();
     }
 
     /**
-     *
      * extract annotations as string array
      */
     public void extractAnnotations() {
@@ -55,7 +66,7 @@ public class MethodSummary {
 
     @Override
     public String toString() {
-        return modifiers + " name='" + name + '\'' +
+        return modifiers + " name='" + name + '\'' + parameter_list +
                 ", annotations=" + Arrays.toString(annotations) +
                 ", LOC=" + LOC +
                 ", CC=" + CC;
