@@ -1,58 +1,69 @@
 import com.intellij.psi.*;
 import org.apache.commons.lang.StringUtils;
 
+import java.util.Arrays;
+
 public class MethodSummary {
 
     private PsiMethod method;
 
+    private String name;
+    private String[] annotations;
+    private int LOC;
+    private int CC;
+
     public MethodSummary(PsiMethod method) {
         this.method = method;
+        name = method.getName();
+        extractAnnotations();
+        MethodVisitor visitor = new MethodVisitor();
+        method.accept(visitor);
+        CC = visitor.getCC();
+        LOC = computeLOC();
     }
 
     /**
      *
-     * @return the name of the method.
+     * extract annotations as string array
      */
-    public String getName() {return method.getName();}
-
-    /**
-     *
-     * @return method's annotations.
-     */
-    public String getAnnotations() {
-        String result = "";
+    public void extractAnnotations() {
+        int i = 0;
+        annotations = new String[method.getAnnotations().length];
         for(PsiAnnotation annotation: method.getAnnotations()) {
-            result += annotation.getText() + "\n";
+            annotations[i++] = annotation.getText();
         }
-        return result;
     }
 
     /**
      *
      * @return the lines of code of the actual method.
      */
-    public int getLOC() {
+    public int computeLOC() {
         String body = method.getBody().getText();
         return StringUtils.countMatches(body, "\n") - 1;
     }
 
-    /**
-     *
-     * @return a text summary of the method.
-     */
-    public String createSummary() {
-        String result = "Method ";
-
-        result += getName() + ":\n";
-
-        if(!getAnnotations().isEmpty()) {
-            result += "Annotations:\n";
-            result += getAnnotations();
-        }
-
-        result += "Lines of code: " + getLOC() + "\n";
-
-        return result;
+    @Override
+    public String toString() {
+        return "name='" + name + '\'' +
+                ", annotations=" + Arrays.toString(annotations) +
+                ", LOC=" + LOC +
+                ", CC=" + CC;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String[] getAnnotations() {
+        return annotations;
+    }
+
+    public int getLOC() {
+        return LOC;
+    }
+
+    public int getCC() {
+        return CC;
+    }
 }
