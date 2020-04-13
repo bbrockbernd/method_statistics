@@ -1,4 +1,5 @@
 import com.intellij.psi.*;
+import com.intellij.psi.javadoc.PsiDocComment;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Arrays;
@@ -13,6 +14,7 @@ public class MethodSummary {
     private String returnType;
     private String signature;
     private String[] annotations;
+    private String documentation;
     private int LOC;
     private int CC;
 
@@ -24,6 +26,7 @@ public class MethodSummary {
         extractReturnType();
         extractAnnotations();
         buildSignature();
+        extractDescription();
         MethodVisitor visitor = new MethodVisitor();
         method.accept(visitor);
         CC = visitor.getCC();
@@ -31,14 +34,24 @@ public class MethodSummary {
     }
 
     /**
-     * put all extracted info into a complete method signature
+     * extract method description as single String.
+     */
+    public void extractDescription() {
+        documentation = "no description";
+        PsiDocComment doc = method.getDocComment();
+        if(doc == null) return;
+        documentation = doc.getText();
+    }
+
+    /**
+     * put all extracted info into a complete method signature.
      */
     public void buildSignature() {
         signature = modifiers + " " + returnType + " " + name + parameterList;
     }
 
     /**
-     * extract returnType as single String
+     * extract returnType as single String.
      */
     public void extractReturnType() {
         returnType = "void";
@@ -48,21 +61,21 @@ public class MethodSummary {
     }
 
     /**
-     * extract method parameter as single String
+     * extract method parameter as single String.
      */
     public void extractParameters() {
         parameterList = method.getParameterList().getText();
     }
 
     /**
-     * extract method modifiers as single String
+     * extract method modifiers as single String.
      */
     public void extractModifiers() {
         modifiers = method.getModifierList().getText();
     }
 
     /**
-     * extract annotations as string array
+     * extract annotations as string array.
      */
     public void extractAnnotations() {
         int i = 0;
@@ -89,6 +102,7 @@ public class MethodSummary {
     public String toString() {
         return signature +
                 ", annotations=" + Arrays.toString(annotations) +
+                ", description=" + documentation +
                 ", LOC=" + LOC +
                 ", CC=" + CC;
     }
