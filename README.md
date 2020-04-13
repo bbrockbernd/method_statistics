@@ -1,2 +1,2 @@
-![](https://github.com/bbrockbernd/method_statistics/workflows/gradle.yml/badge.svg)
+![](https://github.com/bbrockbernd/method_statistics/.github/workflows/gradle.yml/badge.svg)
 # Method Statistics Plugin
