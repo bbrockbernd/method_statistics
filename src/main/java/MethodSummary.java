@@ -8,6 +8,7 @@ public class MethodSummary {
     private PsiMethod method;
 
     private String name;
+    private String modifiers;
     private String[] annotations;
     private int LOC;
     private int CC;
@@ -15,11 +16,16 @@ public class MethodSummary {
     public MethodSummary(PsiMethod method) {
         this.method = method;
         name = method.getName();
+        extractModifiers();
         extractAnnotations();
         MethodVisitor visitor = new MethodVisitor();
         method.accept(visitor);
         CC = visitor.getCC();
         LOC = computeLOC();
+    }
+
+    public void extractModifiers() {
+        modifiers = method.getModifierList().getText();
     }
 
     /**
@@ -49,7 +55,7 @@ public class MethodSummary {
 
     @Override
     public String toString() {
-        return "name='" + name + '\'' +
+        return modifiers + " name='" + name + '\'' +
                 ", annotations=" + Arrays.toString(annotations) +
                 ", LOC=" + LOC +
                 ", CC=" + CC;
