@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.jetbrains.intellij' version '0.4.18'
     id 'checkstyle'
+    id 'jacoco'
 }
 
 group 'org.project.jetbrains'
@@ -21,6 +22,16 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled false
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+}
+
+
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
