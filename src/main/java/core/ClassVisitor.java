@@ -1,16 +1,19 @@
+package core;
+
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiRecursiveElementVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
 class ClassVisitor extends PsiRecursiveElementVisitor {
 
-    private List<PsiMethod> psiMethods = new ArrayList<PsiMethod>();
+    private List<PsiMethod> psiMethods = new ArrayList<>();
 
     @Override
-    public void visitElement(PsiElement element) {
+    public void visitElement(@NotNull PsiElement element) {
 
         if (element instanceof PsiMethod) {
             psiMethods.add((PsiMethod) element);

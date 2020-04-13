@@ -1,12 +1,13 @@
-import com.intellij.psi.*;
-import org.apache.commons.lang.StringUtils;
-
-import java.util.Arrays;
-package gui;
+package core;
 
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiMethod;
+import java.util.Arrays;
+import org.apache.commons.lang.StringUtils;
 
+/**
+ * Method data object for storing relevant method data for the plugin.
+ */
 public class MethodSummary {
 
     public String name;
@@ -30,46 +31,38 @@ public class MethodSummary {
     }
 
     /**
-     *
      * extract annotations as string array
      */
     public void extractAnnotations() {
         int i = 0;
         annotations = new String[method.getAnnotations().length];
-        for(PsiAnnotation annotation: method.getAnnotations()) {
+        for (PsiAnnotation annotation : method.getAnnotations()) {
             annotations[i++] = annotation.getText();
         }
     }
 
     /**
-     *
      * @return the lines of code of the actual method.
      */
     public int computeLOC() {
-        if (method.getBody().isEmpty()) return 0;
+        if (method.getBody().isEmpty()) {
+            return 0;
+        }
         String body = method.getBody().getText();
         System.out.println(body);
         int newLines = StringUtils.countMatches(body, "\n");
-        if (newLines <= 1) return 1;
+        if (newLines <= 1) {
+            return 1;
+        }
         return newLines;
     }
 
     @Override
     public String toString() {
         return "name='" + name + '\'' +
-                ", annotations=" + Arrays.toString(annotations) +
-                ", LOC=" + LOC +
-                ", CC=" + CC;
+            ", annotations=" + Arrays.toString(annotations) +
+            ", LOC=" + LOC +
+            ", CC=" + CC;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public String[] getAnnotations() {
-        return annotations;
-    }
-
-    }
-
 }
+

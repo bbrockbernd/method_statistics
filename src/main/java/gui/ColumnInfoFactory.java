@@ -1,11 +1,19 @@
 package gui;
 
 import com.intellij.util.ui.ColumnInfo;
+import core.MethodSummary;
 import java.util.Comparator;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * All the column properties of the gui table are defined here.
+ */
 class ColumnInfoFactory {
 
+    /**
+     * Generates the columnvector for the table model.
+     * @return ColumnInfo's
+     */
     public ColumnInfo[] getColumnInfos() {
         return new ColumnInfo[] {
             new NameInfo(),

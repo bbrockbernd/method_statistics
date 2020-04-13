@@ -1,16 +1,19 @@
+package core;
+
 import com.intellij.psi.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
 class MethodVisitor extends PsiRecursiveElementVisitor {
 
     private int CC = 1;
 
-    private List<PsiStatement> psiStatements = new ArrayList<PsiStatement>();
+    private List<PsiStatement> psiStatements = new ArrayList<>();
 
     @Override
-    public void visitElement(PsiElement element) {
+    public void visitElement(@NotNull PsiElement element) {
 
         //remenber all the statements
         if (element instanceof PsiStatement) {
