@@ -3,7 +3,7 @@ import com.intellij.psi.*;
 import java.util.ArrayList;
 import java.util.List;
 
-class MethodVisitor extends PsiRecursiveElementVisitor {
+class MethodVisitor extends PsiElementVisitor {
 
     private int CC = 1;
 
@@ -12,7 +12,7 @@ class MethodVisitor extends PsiRecursiveElementVisitor {
     @Override
     public void visitElement(PsiElement element) {
 
-        //remenber all the statements
+        //remember all the statements
         if (element instanceof PsiStatement) {
             psiStatements.add((PsiStatement) element);
         }
