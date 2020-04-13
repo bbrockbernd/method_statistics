@@ -1,21 +1,29 @@
-import com.intellij.psi.*;
+package core;
+
+import com.intellij.psi.PsiAnnotation;
+import com.intellij.psi.PsiMethod;
+import com.intellij.psi.PsiType;
 import com.intellij.psi.javadoc.PsiDocComment;
-import org.apache.commons.lang.StringUtils;
+
 import java.util.Arrays;
 
+/**
+ * Method data object for storing relevant method data for the plugin.
+ */
 public class MethodSummary {
 
-    private PsiMethod method;
+    public PsiMethod method;
 
-    private String name;
-    private String modifiers;
-    private String parameterList;
-    private String returnType;
-    private String signature;
-    private String[] annotations;
-    private String documentation;
-    private int LOC;
-    private int CC;
+    public String name;
+    public String modifiers;
+    public String parameterList;
+    public String returnType;
+    public String signature;
+    public String[] annotations;
+    public String documentation;
+    public int parameterSize;
+    public int LOC;
+    public int CC;
 
     public MethodSummary(PsiMethod method) {
         this.method = method;
@@ -26,6 +34,7 @@ public class MethodSummary {
         extractAnnotations();
         buildSignature();
         extractDescription();
+        extractParametersSize();
         MethodVisitor visitor = new MethodVisitor();
         method.accept(visitor);
         CC = visitor.getCC();
@@ -33,7 +42,7 @@ public class MethodSummary {
     }
 
     /**
-     * extract method description as single String.
+     * Extract method description as single String.
      */
     public void extractDescription() {
         documentation = "no description";
@@ -43,14 +52,14 @@ public class MethodSummary {
     }
 
     /**
-     * put all extracted info into a complete method signature.
+     * Put all extracted info into a complete method signature.
      */
     public void buildSignature() {
         signature = modifiers + " " + returnType + " " + name + parameterList;
     }
 
     /**
-     * extract returnType as single String.
+     * Extract returnType as single String.
      */
     public void extractReturnType() {
         returnType = "void";
@@ -60,32 +69,40 @@ public class MethodSummary {
     }
 
     /**
-     * extract method parameter as single String.
+     * Extract method parameter as single String.
      */
     public void extractParameters() {
         parameterList = method.getParameterList().getText();
     }
 
     /**
-     * extract method modifiers as single String.
+     * Extract method parameters size as single int.
+     */
+    public void extractParametersSize() {
+        parameterSize = method.getParameters().length;
+    }
+
+    /**
+     * Extract method modifiers as single String.
      */
     public void extractModifiers() {
         modifiers = method.getModifierList().getText();
     }
 
     /**
-     * extract annotations as string array.
+     * Extract annotations as string array.
      */
     public void extractAnnotations() {
         int i = 0;
         annotations = new String[method.getAnnotations().length];
-        for(PsiAnnotation annotation: method.getAnnotations()) {
+        for (PsiAnnotation annotation : method.getAnnotations()) {
             annotations[i++] = annotation.getText();
         }
     }
 
     /**
      * The LOC includes the signature of the method.
+     *
      * @return the lines of code of the actual method.
      */
     public int computeLOC() {
@@ -119,19 +136,5 @@ public class MethodSummary {
                 ", CC=" + CC;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String[] getAnnotations() {
-        return annotations;
-    }
-
-    public int getLOC() {
-        return LOC;
-    }
-
-    public int getCC() {
-        return CC;
-    }
 }
+
