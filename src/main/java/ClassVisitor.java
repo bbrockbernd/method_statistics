@@ -1,6 +1,5 @@
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiRecursiveElementVisitor;
 import com.intellij.psi.PsiRecursiveElementWalkingVisitor;
 
 import java.util.ArrayList;
