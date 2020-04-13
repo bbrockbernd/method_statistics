@@ -1,4 +1,5 @@
 import com.intellij.psi.*;
+import org.apache.commons.lang.StringUtils;
 
 public class MethodSummary {
 
@@ -21,7 +22,7 @@ public class MethodSummary {
     public String getAnnotations() {
         String result = "";
         for(PsiAnnotation annotation: method.getAnnotations()) {
-            result += annotation.getQualifiedName() + "\n";
+            result += annotation.getText() + "\n";
         }
         return result;
     }
@@ -30,10 +31,9 @@ public class MethodSummary {
      *
      * @return the lines of code of the actual method.
      */
-    public int getLinesOfCode() {
-        MethodVisitor methodVisitor = new MethodVisitor();
-        method.accept(methodVisitor);
-        return methodVisitor.getPsiStatements().size();
+    public int getLOC() {
+        String body = method.getBody().getText();
+        return StringUtils.countMatches(body, "\n") - 1;
     }
 
     /**
@@ -50,10 +50,9 @@ public class MethodSummary {
             result += getAnnotations();
         }
 
-        result += "Lines of code: " + getLinesOfCode() + "\n";
+        result += "Lines of code: " + getLOC() + "\n";
 
         return result;
     }
 
 }
-
