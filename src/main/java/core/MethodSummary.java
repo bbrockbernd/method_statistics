@@ -1,19 +1,28 @@
-import com.intellij.psi.*;
+package core;
 
+import com.intellij.psi.PsiAnnotation;
+import com.intellij.psi.PsiMethod;
 import java.util.Arrays;
 
+/**
+ * Method data object for storing relevant method data for the plugin.
+ */
 public class MethodSummary {
 
-    private PsiMethod method;
-
-    private String name;
-    private String[] annotations;
-    private int LOC;
-    private int CC;
+    public String name;
+    public int CC;
+    public int LOC;
+    public String returnType;
+    public PsiMethod method;
+    public int params;
+    public String[] annotations;
 
     public MethodSummary(PsiMethod method) {
         this.method = method;
-        name = method.getName();
+        this.name = method.getName();
+        this.params = method.getParameters().length;
+        if(method.getReturnType() != null)
+            this.returnType = method.getReturnType().getPresentableText();
         extractAnnotations();
         MethodVisitor visitor = new MethodVisitor();
         method.accept(visitor);
@@ -22,19 +31,19 @@ public class MethodSummary {
     }
 
     /**
-     *
      * extract annotations as string array
      */
     public void extractAnnotations() {
         int i = 0;
         annotations = new String[method.getAnnotations().length];
-        for(PsiAnnotation annotation: method.getAnnotations()) {
+        for (PsiAnnotation annotation : method.getAnnotations()) {
             annotations[i++] = annotation.getText();
         }
     }
 
     /**
      * The LOC includes the signature of the method.
+     *
      * @return the lines of code of the actual method.
      */
     public int computeLOC() {
@@ -62,24 +71,9 @@ public class MethodSummary {
     @Override
     public String toString() {
         return "name='" + name + '\'' +
-                ", annotations=" + Arrays.toString(annotations) +
-                ", LOC=" + LOC +
-                ", CC=" + CC;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String[] getAnnotations() {
-        return annotations;
-    }
-
-    public int getLOC() {
-        return LOC;
-    }
-
-    public int getCC() {
-        return CC;
+            ", annotations=" + Arrays.toString(annotations) +
+            ", LOC=" + LOC +
+            ", CC=" + CC;
     }
 }
+
