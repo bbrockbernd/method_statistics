@@ -3,6 +3,7 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 
@@ -54,18 +55,3 @@ public class StatisticsAction extends AnAction {
         return toolWindow;
     }
 
-
-    static class Visitor extends PsiRecursiveElementVisitor {
-        private List<PsiMethod> psiMethods = new ArrayList<PsiMethod>();
-        @Override
-        public void visitElement(PsiElement element) {
-            if (element instanceof PsiMethod) {
-                psiMethods.add((PsiMethod) element);
-            }
-            super.visitElement(element);
-        }
-        public List<PsiMethod> getPsiMethods() {
-            return psiMethods;
-        }
-    }
-}
