@@ -31,12 +31,12 @@ public class StatisticsAction extends AnAction {
             }
             //display methods name if the opened file is a Java file
             if(currentFile instanceof PsiJavaFile) {
-                Visitor visitor = new Visitor();
+                ClassVisitor visitor = new ClassVisitor();
                 currentFile.accept(visitor);
                 String methods = "";
                 for(PsiMethod m : visitor.getPsiMethods()) {
                     MethodSummary methodSummary = new MethodSummary(m);
-                    methods += methodSummary.createSummary() + "\n\n\n";
+                    methods += methodSummary.toString() + "\n\n";
                 }
                 dlgMsg.append(String.format("\nMethods in this Java class: %s", methods));
             }
@@ -50,25 +50,6 @@ public class StatisticsAction extends AnAction {
             Project project = e.getProject();
             e.getPresentation().setEnabledAndVisible(project != null);
             e.getPresentation().setIcon(AllIcons.Ide.Rating);
-        }
-    }
-
-    class Visitor extends PsiRecursiveElementVisitor {
-
-        private List<PsiMethod> psiMethods = new ArrayList<PsiMethod>();
-
-        @Override
-        public void visitElement(PsiElement element) {
-
-            if (element instanceof PsiMethod) {
-                psiMethods.add((PsiMethod) element);
-            }
-
-            super.visitElement(element);
-        }
-
-        public List<PsiMethod> getPsiMethods() {
-            return psiMethods;
         }
     }
 
