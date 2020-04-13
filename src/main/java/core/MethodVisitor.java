@@ -1,12 +1,10 @@
 package core;
-
 import com.intellij.psi.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import org.jetbrains.annotations.NotNull;
 
-class MethodVisitor extends PsiElementVisitor {
+class MethodVisitor extends PsiRecursiveElementWalkingVisitor {
 
     private int CC = 1;
 

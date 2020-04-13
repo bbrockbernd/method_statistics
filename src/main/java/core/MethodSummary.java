@@ -21,7 +21,8 @@ public class MethodSummary {
         this.method = method;
         this.name = method.getName();
         this.params = method.getParameters().length;
-        this.returnType = method.getReturnType().getPresentableText();
+        if(method.getReturnType() != null)
+            this.returnType = method.getReturnType().getPresentableText();
         extractAnnotations();
         MethodVisitor visitor = new MethodVisitor();
         method.accept(visitor);
