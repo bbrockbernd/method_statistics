@@ -1,15 +1,15 @@
-import com.intellij.psi.*;
+import com.intellij.psi.PsiAnnotation;
+import com.intellij.psi.PsiMethod;
 
 import java.util.Arrays;
 
 public class MethodSummary {
 
     private PsiMethod method;
-
     private String name;
     private String[] annotations;
-    private int LOC;
-    private int CC;
+    private int loc;
+    private int cc;
 
     public MethodSummary(PsiMethod method) {
         this.method = method;
@@ -17,18 +17,17 @@ public class MethodSummary {
         extractAnnotations();
         MethodVisitor visitor = new MethodVisitor();
         method.accept(visitor);
-        CC = visitor.getCC();
-        LOC = computeLOC();
+        cc = visitor.getCc();
+        loc = computeLoc();
     }
 
     /**
-     *
-     * extract annotations as string array
+     * Extract annotations as string array.
      */
     public void extractAnnotations() {
         int i = 0;
         annotations = new String[method.getAnnotations().length];
-        for(PsiAnnotation annotation: method.getAnnotations()) {
+        for (PsiAnnotation annotation: method.getAnnotations()) {
             annotations[i++] = annotation.getText();
         }
     }
@@ -37,7 +36,7 @@ public class MethodSummary {
      * The LOC includes the signature of the method.
      * @return the lines of code of the actual method.
      */
-    public int computeLOC() {
+    public int computeLoc() {
         String text = method.getBody().getText();
         int lines = 0;
         boolean emptyLine = true;
@@ -61,10 +60,10 @@ public class MethodSummary {
 
     @Override
     public String toString() {
-        return "name='" + name + '\'' +
-                ", annotations=" + Arrays.toString(annotations) +
-                ", LOC=" + LOC +
-                ", CC=" + CC;
+        return "name='" + name + '\''
+                + ", annotations=" + Arrays.toString(annotations)
+                + ", LOC=" + loc
+                + ", CC=" + cc;
     }
 
     public String getName() {
@@ -75,11 +74,11 @@ public class MethodSummary {
         return annotations;
     }
 
-    public int getLOC() {
-        return LOC;
+    public int getLoc() {
+        return loc;
     }
 
-    public int getCC() {
-        return CC;
+    public int getCc() {
+        return cc;
     }
 }

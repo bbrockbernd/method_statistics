@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'org.jetbrains.intellij' version '0.4.18'
+    id 'checkstyle'
 }
 
 group 'org.project.jetbrains'
@@ -21,6 +22,12 @@ intellij {
     version '2019.3.4'
     plugins 'java'
 }
+
+checkstyle {
+    toolVersion "8.25"
+    configFile = rootProject.file('config/checkstyle/checkstyle.xml')
+}
+
 patchPluginXml {
     changeNotes """
       Add change notes here.<br>
