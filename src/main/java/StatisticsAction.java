@@ -36,7 +36,7 @@ public class StatisticsAction extends AnAction {
                 String methods = "";
                 for(PsiMethod m : visitor.getPsiMethods()) {
                     MethodSummary methodSummary = new MethodSummary(m);
-                    methods += methodSummary.createSummary() + "\n\n\n";
+                    methods += methodSummary.createSummary() + "\n";
                 }
                 dlgMsg.append(String.format("\nMethods in this Java class: %s", methods));
             }

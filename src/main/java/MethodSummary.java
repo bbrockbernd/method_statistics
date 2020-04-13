@@ -1,5 +1,4 @@
-import com.intellij.psi.PsiAnnotation;
-import com.intellij.psi.PsiMethod;
+import com.intellij.psi.*;
 
 public class MethodSummary {
 
@@ -11,13 +10,13 @@ public class MethodSummary {
 
     /**
      *
-     * @return the name of the method
+     * @return the name of the method.
      */
     public String getName() {return method.getName();}
 
     /**
      *
-     * @return method annotations
+     * @return method's annotations.
      */
     public String getAnnotations() {
         String result = "";
@@ -29,10 +28,20 @@ public class MethodSummary {
 
     /**
      *
-     * @return a text summary of the method
+     * @return the lines of code of the actual method.
+     */
+    public int getLinesOfCode() {
+        MethodVisitor methodVisitor = new MethodVisitor();
+        method.accept(methodVisitor);
+        return methodVisitor.getPsiStatements().size();
+    }
+
+    /**
+     *
+     * @return a text summary of the method.
      */
     public String createSummary() {
-        String result = "";
+        String result = "Method ";
 
         result += getName() + ":\n";
 
@@ -41,8 +50,10 @@ public class MethodSummary {
             result += getAnnotations();
         }
 
-        return result;
+        result += "Lines of code: " + getLinesOfCode() + "\n";
 
+        return result;
     }
 
 }
+
