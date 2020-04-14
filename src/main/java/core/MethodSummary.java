@@ -157,5 +157,13 @@ public class MethodSummary {
     public int getCC() {
         return cc;
     }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public String getParameterList() {
+        return parameterList;
+    }
 }
 
