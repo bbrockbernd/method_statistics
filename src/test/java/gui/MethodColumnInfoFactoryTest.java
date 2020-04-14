@@ -6,13 +6,13 @@ import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class ColumnInfoFactoryTest extends TestCase {
+public class MethodColumnInfoFactoryTest extends TestCase {
 
     ColumnInfo[] infos;
 
     @BeforeEach
     void start() {
-        infos = new ColumnInfoFactory().getColumnInfos();
+        infos = new MethodColumnInfoFactory().getColumnInfos();
     }
 
     @Test

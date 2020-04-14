@@ -1,7 +1,6 @@
 package gui;
 
 import com.intellij.codeInsight.documentation.DocumentationComponent;
-import com.intellij.openapi.Disposable;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowAnchor;
@@ -24,12 +23,12 @@ import javax.swing.JLabel;
 /**
  * This is the graphical report of the method statistics plugin.
  */
-public class StatisticsToolWindow {
+public class MethodToolWindow {
 
     ToolWindowManager toolWindowManager;
     ToolWindow toolWindow;
 
-    public StatisticsToolWindow(Project project) {
+    public MethodToolWindow(Project project) {
         toolWindowManager = ToolWindowManager.getInstance(project);
         toolWindow = toolWindowManager
             .registerToolWindow("Method Statistics", true, ToolWindowAnchor.BOTTOM);
@@ -69,7 +68,7 @@ public class StatisticsToolWindow {
      */
     private void generateTable(List<MethodSummary> methodItems, JBSplitter tableSplitter) {
         ListTableModel<MethodSummary> model = new ListTableModel<>(
-            new ColumnInfoFactory().getColumnInfos(), methodItems);
+            new MethodColumnInfoFactory().getColumnInfos(), methodItems);
         JBTable table = new JBTable(model);
         setMouseAdapter(table, methodItems, tableSplitter);
         tableSplitter.setFirstComponent(new JBScrollPane(table));

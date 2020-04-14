@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * All the column properties of the gui table are defined here.
  */
-class ColumnInfoFactory {
+class MethodColumnInfoFactory {
 
     /**
      * Generates the columnvector for the table model.
