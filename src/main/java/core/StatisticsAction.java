@@ -9,11 +9,8 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiManager;
-import com.intellij.psi.PsiMethod;
 
 import gui.StatisticsToolWindow;
-import java.util.ArrayList;
-import java.util.List;
 
 public class StatisticsAction extends AnAction {
 

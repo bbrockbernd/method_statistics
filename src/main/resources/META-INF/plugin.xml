@@ -10,8 +10,9 @@
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
 
-    <depends>com.intellij.modules.java</depends>
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java</depends>
+    <depends>org.intellij.plugins.markdown</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
@@ -20,6 +21,10 @@
     <actions>
         <!-- Add your actions here -->
         <action id="core.StatisticsAction" class="core.StatisticsAction" text="Methods Statistics" description="stats">
+            <add-to-group group-id="ToolsMenu" anchor="first"/>
+        </action>
+        <action id="core.MarkdownAction" class="core.MarkdownAction" text="Markdown Action"
+                description="See stats about your md files">
             <add-to-group group-id="ToolsMenu" anchor="first"/>
         </action>
     </actions>

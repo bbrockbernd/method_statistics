@@ -14,16 +14,16 @@ public class MethodSummary {
 
     public PsiMethod method;
 
-    public String name;
-    public String modifiers;
-    public String parameterList;
-    public String returnType;
-    public String signature;
-    public String[] annotations;
-    public String documentation;
-    public int parameterSize;
-    public int loc;
-    public int cc;
+    private String name;
+    private String modifiers;
+    private String parameterList;
+    private String returnType;
+    private String signature;
+    private String[] annotations;
+    private String documentation;
+    private int parameterSize;
+    private int loc;
+    private int cc;
 
     /**
      * Constructor for the Summary class.
@@ -164,6 +164,14 @@ public class MethodSummary {
 
     public String getParameterList() {
         return parameterList;
+    }
+
+    public int getParameterSize() {
+        return parameterSize;
+    }
+
+    public String getReturnType() {
+        return returnType;
     }
 }
 
