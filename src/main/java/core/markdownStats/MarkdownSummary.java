@@ -15,6 +15,9 @@ public class MarkdownSummary {
     private String name;
     private int numberOfImages;
     private int numberOfParagraphs;
+    private int headers;
+    private int tableHeaders;
+    private int blockQuotes;
     private LinkSummary[] links;
 
     /**
@@ -29,6 +32,9 @@ public class MarkdownSummary {
         file.accept(visitor);
         numberOfImages = visitor.getNumberOfImages();
         numberOfParagraphs = visitor.getNumberOfParagraphs();
+        headers = visitor.getHeaders().size();
+        tableHeaders = visitor.getTableHeaders().size();
+        blockQuotes = visitor.getBlockQuotes().size();
         links = new LinkSummary[visitor.getLinks().size()];
         int i = 0;
         for(PsiElement link : visitor.getLinks()) {
@@ -39,6 +45,18 @@ public class MarkdownSummary {
 
     public String getName() {
         return name;
+    }
+
+    public int getHeaders() {
+        return headers;
+    }
+
+    public int getTableHeaders() {
+        return tableHeaders;
+    }
+
+    public int getBlockQuotes() {
+        return blockQuotes;
     }
 
     public int getNumberOfImages() {

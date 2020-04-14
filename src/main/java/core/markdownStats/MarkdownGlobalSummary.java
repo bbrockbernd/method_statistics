@@ -38,4 +38,8 @@ public class MarkdownGlobalSummary {
     public List<MarkdownSummary> getMarkdowns() {
         return Arrays.asList(markdowns);
     }
+
+    public Project getProject() {
+        return project;
+    }
 }

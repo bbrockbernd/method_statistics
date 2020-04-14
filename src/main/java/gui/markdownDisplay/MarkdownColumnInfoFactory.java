@@ -20,7 +20,10 @@ class MarkdownColumnInfoFactory {
             new NameInfo(),
             new LinksInfo(),
             new ImageInfo(),
-            new ParagraphInfo()
+            new ParagraphInfo(),
+            new HeaderInfo(),
+            new TableHeaderInfo(),
+            new BlockQuoteInfo()
         };
     }
     static class NameInfo extends ColumnInfo<MarkdownSummary, String> {
@@ -93,6 +96,60 @@ class MarkdownColumnInfoFactory {
         @Override
         public Comparator<MarkdownSummary> getComparator() {
             return Comparator.comparingInt(o -> o.getNumberOfParagraphs());
+        }
+    }
+    static class HeaderInfo extends ColumnInfo<MarkdownSummary, String> {
+
+        public HeaderInfo() {
+            super("Headers");
+        }
+
+        @Nullable
+        @Override
+        public String valueOf(MarkdownSummary methodItem) {
+            return String.valueOf(methodItem.getHeaders());
+        }
+
+        @Nullable
+        @Override
+        public Comparator<MarkdownSummary> getComparator() {
+            return Comparator.comparingInt(o -> o.getHeaders());
+        }
+    }
+    static class TableHeaderInfo extends ColumnInfo<MarkdownSummary, String> {
+
+        public TableHeaderInfo() {
+            super("Table Headers");
+        }
+
+        @Nullable
+        @Override
+        public String valueOf(MarkdownSummary methodItem) {
+            return String.valueOf(methodItem.getTableHeaders());
+        }
+
+        @Nullable
+        @Override
+        public Comparator<MarkdownSummary> getComparator() {
+            return Comparator.comparingInt(o -> o.getTableHeaders());
+        }
+    }
+    static class BlockQuoteInfo extends ColumnInfo<MarkdownSummary, String> {
+
+        public BlockQuoteInfo() {
+            super("Block Quotes");
+        }
+
+        @Nullable
+        @Override
+        public String valueOf(MarkdownSummary methodItem) {
+            return String.valueOf(methodItem.getBlockQuotes());
+        }
+
+        @Nullable
+        @Override
+        public Comparator<MarkdownSummary> getComparator() {
+            return Comparator.comparingInt(o -> o.getBlockQuotes());
         }
     }
 

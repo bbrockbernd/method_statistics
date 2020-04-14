@@ -43,11 +43,11 @@ public class MarkdownToolWindow {
         generateMarkdownTable(summary.getMarkdowns(), splitterPane);
 
         Content content;
-        if ((content = toolWindow.getContentManager().findContent("???")) != null) {
+        if ((content = toolWindow.getContentManager().findContent(summary.getProject().getName())) != null) {
             content.setComponent(splitterPane);
         } else {
             ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
-            content = contentFactory.createContent(splitterPane, "???", false);
+            content = contentFactory.createContent(splitterPane, summary.getProject().getName(), false);
             toolWindow.getContentManager().addContent(content);
         }
         toolWindow.getContentManager().setSelectedContent(content);
@@ -65,7 +65,7 @@ public class MarkdownToolWindow {
         JBTable table = new JBTable(model);
         setMouseAdapter(table, markdowns, tableSplitter);
         tableSplitter.setFirstComponent(new JBScrollPane(table));
-        tableSplitter.setSecondComponent(new JLabel("Click the number of links to show details",
+        tableSplitter.setSecondComponent(new JLabel("Select a file to see link details",
             JLabel.CENTER));
     }
 

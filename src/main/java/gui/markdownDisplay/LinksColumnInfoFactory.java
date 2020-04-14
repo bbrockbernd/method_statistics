@@ -27,7 +27,7 @@ public class LinksColumnInfoFactory {
     static class NameInfo extends ColumnInfo<LinkSummary, String> {
 
         public NameInfo() {
-            super("Name");
+            super("Link");
         }
 
         @Nullable
@@ -81,7 +81,7 @@ public class LinksColumnInfoFactory {
     static class LocationInfo extends ColumnInfo<LinkSummary, String> {
 
         public LocationInfo() {
-            super("Cover");
+            super("Inside this Repo");
         }
 
         @Nullable
