@@ -50,14 +50,17 @@ public class LinkSummary {
     }
 
     private boolean extractAvailability() {
-        return false;
-//        String linkPath = linkName;
-//        if (linkPath.startsWith(".") || linkPath.startsWith("/")) {
-//            linkPath = linkPath.substring(linkPath.indexOf("/") + 1);
-//        }
-//        Path path = Paths.get(project.getBasePath(),
-//                linkPath);
-//        return Files.exists(path);
+//        return false;
+        String linkPath = linkName;
+        if (linkPath.startsWith("http:") || linkPath.startsWith("https:")) {
+            return false;
+        }
+        if (linkPath.startsWith(".") || linkPath.startsWith("/")) {
+            linkPath = linkPath.substring(linkPath.indexOf("/") + 1);
+        }
+        Path path = Paths.get(project.getBasePath(),
+                linkPath);
+        return Files.exists(path);
     }
 
     public void navigate(boolean focus) {
