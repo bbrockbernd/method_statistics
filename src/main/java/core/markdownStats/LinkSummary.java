@@ -85,13 +85,4 @@ public class LinkSummary {
         return link;
     }
 
-    @Override
-    public String toString() {
-        return "LinkSummary{"
-                + "fileName='" + fileName + '\''
-                + ", linkName='" + linkName + '\''
-                + ", type='" + type + '\''
-                + ", cover=" + text + '\''
-                + ", in this repo= " + inThisRepo + '\'' + '}';
-    }
 }

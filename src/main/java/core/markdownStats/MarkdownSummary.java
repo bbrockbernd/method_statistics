@@ -25,10 +25,9 @@ public class MarkdownSummary {
      * It calculates the statistics for a markdown file.
      * @param file markdown file to analyze.
      */
-    public MarkdownSummary(PsiFile file) {
+    public MarkdownSummary(PsiFile file, MarkdownVisitor visitor) {
         this.file = file;
         name = file.getName();
-        MarkdownVisitor visitor = new MarkdownVisitor();
         file.accept(visitor);
         numberOfImages = visitor.getNumberOfImages();
         numberOfParagraphs = visitor.getNumberOfParagraphs();

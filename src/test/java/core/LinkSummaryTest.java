@@ -1,6 +1,7 @@
 package core;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -60,5 +61,11 @@ public class LinkSummaryTest {
     public void testInThisRepo() {
         LinkSummary summary = new LinkSummary(project, element, "filename");
         assertFalse(summary.isInThisRepo());
+    }
+
+    @Test
+    public void testGetLink() {
+        LinkSummary summary = new LinkSummary(project, element, "filename");
+        assertNotNull(summary.getLink());
     }
 }

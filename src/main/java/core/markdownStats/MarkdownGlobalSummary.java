@@ -31,7 +31,8 @@ public class MarkdownGlobalSummary {
         int i = 0;
         for (VirtualFile file : mdFiles) {
             PsiFile md = PsiManager.getInstance(project).findFile(file);
-            markdowns[i++] = new MarkdownSummary(md);
+            MarkdownVisitor visitor = new MarkdownVisitor();
+            markdowns[i++] = new MarkdownSummary(md, visitor);
         }
     }
 
