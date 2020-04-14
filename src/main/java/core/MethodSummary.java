@@ -6,6 +6,7 @@ import com.intellij.psi.PsiType;
 import com.intellij.psi.javadoc.PsiDocComment;
 
 import java.util.Arrays;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Method summary object for storing relevant method data for the plugin.
@@ -172,6 +173,10 @@ public class MethodSummary {
 
     public String getReturnType() {
         return returnType;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
 

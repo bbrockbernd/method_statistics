@@ -18,6 +18,7 @@ public class StatisticsAction extends AnAction {
 
     /**
      * Event listener for the method statistics tool.
+     *
      * @param event ActionEvent
      */
     @Override
@@ -48,8 +49,9 @@ public class StatisticsAction extends AnAction {
     }
 
     /**
-     * Makes sure only one instance of the toolwindow is available.
-     * Is easier to test than a singleton.
+     * Makes sure only one instance of the toolwindow is available. Is easier to test than a
+     * singleton.
+     *
      * @param project CurrentProject
      * @return toolWindow
      */
