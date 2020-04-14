@@ -8,6 +8,7 @@ import com.intellij.lang.jvm.JvmParameter;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiType;
 import com.intellij.psi.javadoc.PsiDocComment;
+import core.methodStats.MethodSummary;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

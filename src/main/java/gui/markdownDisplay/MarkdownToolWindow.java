@@ -4,11 +4,14 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowAnchor;
 import com.intellij.openapi.wm.ToolWindowManager;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiMethod;
 import com.intellij.ui.JBSplitter;
 import com.intellij.ui.components.JBScrollPane;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import com.intellij.ui.table.JBTable;
+import com.intellij.ui.tree.Navigatable;
 import com.intellij.util.ui.ListTableModel;
 import core.markdownStats.LinkSummary;
 import core.markdownStats.MarkdownGlobalSummary;
@@ -57,7 +60,6 @@ public class MarkdownToolWindow {
     /**
      * Generates JBtable to place in tool window.
      * @param markdowns Found markdown files during analysis.
-     * @return returns ui component
      */
     private void generateMarkdownTable(List<MarkdownSummary> markdowns, JBSplitter tableSplitter) {
         ListTableModel<MarkdownSummary> model = new ListTableModel<>(
@@ -81,9 +83,37 @@ public class MarkdownToolWindow {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int index = table.convertRowIndexToModel(table.getSelectedRow());
-                ListTableModel<LinkSummary> model = new ListTableModel<>(
-                        new LinksColumnInfoFactory().getColumnInfos(), markdowns.get(index).getLinks());
-                tableSplitter.setSecondComponent(new JBScrollPane(new JBTable(model)));
+                generateLinksTable(markdowns.get(index).getLinks(), tableSplitter);
+            }
+        };
+        table.addMouseListener(adapter);
+    }
+    /**
+     * Generates JBtable to place in tool window.
+     * @param links Found links during analysis.
+     */
+    private void generateLinksTable(List<LinkSummary> links, JBSplitter tableSplitter) {
+        ListTableModel<LinkSummary> model = new ListTableModel<>(
+                new LinksColumnInfoFactory().getColumnInfos(), links);
+        JBTable table = new JBTable(model);
+        setLinksMouseAdapter(table,links);
+        tableSplitter.setSecondComponent(new JBScrollPane(table));
+    }
+    /**
+     * Makes table clickable.
+     * After double clicking on a row shows method definition in editor.
+     * @param table Table to make clickable.
+     * @param links Found links in file during analyse.
+     */
+    private void setLinksMouseAdapter(JBTable table, List<LinkSummary> links) {
+        MouseAdapter adapter = new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int index = table.convertRowIndexToModel(table.getSelectedRow());
+                PsiElement link = links.get(index).getLink();
+                if (e.getClickCount() == 2) {
+//                    link.navigate(true);
+                }
             }
         };
         table.addMouseListener(adapter);
