@@ -32,19 +32,19 @@ public class MethodSummaryTest {
     @Test
     public void testName() {
         MethodSummary summary = new MethodSummary(method);
-        assertEquals("Name", summary.name);
+        assertEquals("Name", summary.getName());
     }
 
     @Test
     public void testParamList() {
         MethodSummary summary = new MethodSummary(method);
-        assertEquals("(parameters)", summary.parameterList);
+        assertEquals("(parameters)", summary.getParameterList());
     }
 
     @Test
     public void testParamListSize() {
         MethodSummary summary = new MethodSummary(method);
-        assertEquals(5, summary.parameterSize);
+        assertEquals(5, summary.getParameterSize());
     }
 
     @Test
@@ -53,25 +53,25 @@ public class MethodSummaryTest {
         when(method.getReturnType()).thenReturn(type);
         when(type.getPresentableText()).thenReturn("void");
         MethodSummary summary = new MethodSummary(method);
-        assertEquals("void", summary.returnType);
+        assertEquals("void", summary.getReturnType());
     }
 
     @Test
     public void testReturnTypeConstructor() {
         when(method.getReturnType()).thenReturn(null);
         MethodSummary summary = new MethodSummary(method);
-        assertEquals("Constructor", summary.returnType);
+        assertEquals("Constructor", summary.getReturnType());
     }
 
     @Test
     public void testLoc() {
         MethodSummary summary = new MethodSummary(method);
-        assertEquals(2, summary.loc);
+        assertEquals(2, summary.getLOC());
     }
 
     @Test
     public void testCC() {
         MethodSummary summary = new MethodSummary(method);
-        assertEquals(1, summary.cc);
+        assertEquals(1, summary.getCC());
     }
 }

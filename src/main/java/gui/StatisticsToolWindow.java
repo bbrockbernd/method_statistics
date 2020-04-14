@@ -88,7 +88,7 @@ public class StatisticsToolWindow {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int index = table.convertRowIndexToModel(table.getSelectedRow());
-                PsiMethod method = methodItems.get(index).method;
+                PsiMethod method = methodItems.get(index).getMethod();
                 JComponent component = (JComponent) DocumentationComponent.createAndFetch(method.getProject(), method, () -> {});
                 tableSplitter.setSecondComponent(component);
                 if (e.getClickCount() == 2) {

@@ -25,8 +25,8 @@ public class ChartFactory {
             sliceColors[i] = new Color(r.nextInt(256),
                 r.nextInt(256),
                 r.nextInt(256));
-            LOCchart.addSeries(methods[i].name, methods[i].loc);
-            CCchart.addSeries(methods[i].name, methods[i].loc);
+            LOCchart.addSeries(methods[i].getName(), methods[i].getLOC());
+            CCchart.addSeries(methods[i].getName(), methods[i].getLOC());
         }
         LOCchart.getStyler().setSeriesColors(sliceColors);
         LOCchart.getStyler().setLegendVisible(false);

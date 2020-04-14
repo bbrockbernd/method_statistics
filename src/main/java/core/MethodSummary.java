@@ -8,14 +8,13 @@ import java.util.Arrays;
  */
 public class MethodSummary {
 
-    public PsiMethod method;
-
-    public String name;
-    public String parameterList;
-    public String returnType;
-    public int parameterSize;
-    public int loc;
-    public int cc;
+    private PsiMethod method;
+    private String name;
+    private String parameterList;
+    private String returnType;
+    private int parameterSize;
+    private int loc;
+    private int cc;
 
     /**
      * Constructor for the Summary class.
@@ -73,6 +72,38 @@ public class MethodSummary {
             ", loc=" + loc +
             ", cc=" + cc +
             '}';
+    }
+
+    public PsiMethod getMethod() {
+        return method;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getParameterList() {
+        return parameterList;
+    }
+
+    public String getReturnType() {
+        return returnType;
+    }
+
+    public int getParameterSize() {
+        return parameterSize;
+    }
+
+    public int getLOC() {
+        return loc;
+    }
+
+    public int getCC() {
+        return cc;
     }
 }
 
