@@ -14,7 +14,6 @@ import com.intellij.psi.search.FilenameIndex;
 import java.util.ArrayList;
 import org.jetbrains.annotations.NotNull;
 
-
 public class MarkdownAction extends AnAction {
 
     /**
@@ -37,7 +36,8 @@ public class MarkdownAction extends AnAction {
                 md.accept(visitor);
 
                 for (PsiElement link : visitor.links) {
-                    dlgMsg.append("in class " + file.getName() + " link " + link.getText() + "\n");
+                    MarkdownSummary markdownSummary = new MarkdownSummary(link, file.getName());
+                    dlgMsg.append("\n" + markdownSummary.toString() + "\n");
                 }
             }
         }
