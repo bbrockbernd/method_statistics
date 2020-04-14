@@ -18,8 +18,8 @@ public class MethodSummary {
     public int cc;
 
     /**
-     * Constructor for the Summary class. It calculates the statistics for a method.
-     *
+     * Constructor for the Summary class.
+     * It calculates the statistics for a method.
      * @param method to analyze.
      */
     public MethodSummary(PsiMethod method) {
