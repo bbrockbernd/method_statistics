@@ -1,5 +1,7 @@
 package gui;
 
+import com.intellij.codeInsight.documentation.DocumentationComponent;
+import com.intellij.openapi.Disposable;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowAnchor;
@@ -40,10 +42,12 @@ public class StatisticsToolWindow {
     public void ShowWindow(String className, ClassSummary classItem) {
         //Splitter pane splits the tool window
         JBSplitter splitterPane = new JBSplitter(false);
-        splitterPane.setFirstComponent(generateTable(classItem.getMethodsList()));
+        JBSplitter leftSplitterPane = new JBSplitter(false);
+        generateTable(classItem.getMethodsList(), leftSplitterPane);
 
         //PieCharts as right component
         splitterPane.setSecondComponent(classItem.getChartsPanel());
+        splitterPane.setFirstComponent(leftSplitterPane);
 
         Content content;
         if ((content = toolWindow.getContentManager().findContent(className)) != null) {
@@ -62,12 +66,12 @@ public class StatisticsToolWindow {
      * @param methodItems Found methods during analsye.
      * @return returns ui component
      */
-    private JComponent generateTable(List<MethodSummary> methodItems) {
+    private void generateTable(List<MethodSummary> methodItems, JBSplitter tableSplitter) {
         ListTableModel<MethodSummary> model = new ListTableModel<>(
             new ColumnInfoFactory().getColumnInfos(), methodItems);
         JBTable table = new JBTable(model);
-        setMouseAdapter(table, methodItems);
-        return new JBScrollPane(table);
+        setMouseAdapter(table, methodItems, tableSplitter);
+        tableSplitter.setFirstComponent(new JBScrollPane(table));
     }
 
     /**
@@ -76,13 +80,15 @@ public class StatisticsToolWindow {
      * @param table Table to make clickable.
      * @param methodItems Found methods in during analyse.
      */
-    private void setMouseAdapter(JBTable table, List<MethodSummary> methodItems) {
+    private void setMouseAdapter(JBTable table, List<MethodSummary> methodItems, JBSplitter tableSplitter) {
         MouseAdapter adapter = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                int index = table.convertRowIndexToModel(table.getSelectedRow());
+                PsiMethod method = methodItems.get(index).method;
+                JComponent component = (JComponent) DocumentationComponent.createAndFetch(method.getProject(), method, () -> {});
+                tableSplitter.setSecondComponent(component);
                 if (e.getClickCount() == 2) {
-                    int index = table.convertRowIndexToModel(table.getSelectedRow());
-                    PsiMethod method = methodItems.get(index).method;
                     method.navigate(true);
                 }
             }
