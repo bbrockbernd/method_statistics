@@ -25,10 +25,10 @@ public class ChartFactory {
             sliceColors[i] = new Color(r.nextInt(256),
                     r.nextInt(256),
                     r.nextInt(256));
-                LOCchart.addSeries(methods[i].getName()
-                        + methods[i].getParameterList(), methods[i].getLOC());
-                CCchart.addSeries(methods[i].getName()
-                        + methods[i].getParameterList(), methods[i].getCC());
+                LOCchart.addSeries(methods[i].name
+                        + methods[i].parameterList, methods[i].loc);
+                CCchart.addSeries(methods[i].name
+                        + methods[i].parameterList, methods[i].cc);
         }
         LOCchart.getStyler().setSeriesColors(sliceColors);
         CCchart.getStyler().setSeriesColors(sliceColors);
