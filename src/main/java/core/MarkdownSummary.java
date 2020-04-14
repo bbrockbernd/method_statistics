@@ -48,8 +48,12 @@ public class MarkdownSummary {
     }
 
     private boolean extractAvailability() {
+        String linkPath = linkName;
+        if (linkPath.startsWith(".") || linkPath.startsWith("/")) {
+            linkPath = linkPath.substring(linkPath.indexOf("/") + 1);
+        }
         Path path = Paths.get(project.getBasePath(),
-                linkName.substring(linkName.indexOf("/") + 1));
+                linkPath);
         System.out.println(path);
         System.out.println(Files.exists(path));
         return Files.exists(path);
