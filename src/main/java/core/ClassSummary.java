@@ -6,10 +6,16 @@ import gui.ChartFactory;
 
 
 import java.util.Comparator;
-import javax.swing.*;
+
 import java.util.Arrays;
 import java.util.List;
+import javax.swing.JPanel;
 
+/**
+ * Class that creates a human readable summary of a Java class.
+ * For every method in that class, it creates a method summary using the
+ * MethodSummary class. Those are used for the charts.
+ */
 public class ClassSummary {
 
     private PsiJavaFile file;
@@ -19,8 +25,10 @@ public class ClassSummary {
     private JPanel chartsPanel;
 
     /**
-     * Constructor of the class, which extracts all the info about methods.
-     * @param file the current java file.
+     * Constructor for the summary.
+     * It creates a summary of each method present
+     * in this class.
+     * @param file current Java file.
      */
     public ClassSummary(PsiJavaFile file) {
         this.file = file;
@@ -39,10 +47,10 @@ public class ClassSummary {
 
     @Override
     public String toString() {
-        return "\nClassSummary{" +
-                "name='" + name + '\'' +
-                ", methods=" + Arrays.toString(methods) +
-                '}';
+        return "\nClassSummary{"
+                + "name='" + name + '\''
+                + ", methods=" + Arrays.toString(methods)
+                + '}';
     }
 
     /**
@@ -62,16 +70,16 @@ public class ClassSummary {
     }
 
     public void removeDuplicates (MethodSummary[] methods) {
-        Arrays.sort(methods, Comparator.comparing(method -> method.name));
+        Arrays.sort(methods, Comparator.comparing(method -> method.getName()));
         int c = 1;
         String name = "";
         for(MethodSummary method: methods) {
-            if (name.equals(method.name)) {
-                method.name = method.name + " (" + c + ")";
+            if (name.equals(method.getName())) {
+                method.setName(method.getName() + " (" + c + ")");
                 c++;
             } else {
                 c = 1;
-                name = method.name;
+                name = method.getName();
             }
         }
     }

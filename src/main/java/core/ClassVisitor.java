@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Visitor for the methods of a class.
+ */
 class ClassVisitor extends PsiRecursiveElementVisitor {
 
     private List<PsiMethod> psiMethods = new ArrayList<>();
