@@ -4,6 +4,7 @@ import com.intellij.ui.JBSplitter;
 import core.MethodSummary;
 import org.knowm.xchart.PieChartBuilder;
 import org.knowm.xchart.XChartPanel;
+import org.knowm.xchart.style.Styler;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -35,6 +36,8 @@ public class ChartFactory {
     }
 
     public JBSplitter getPanel() {
+//        CCchart.getStyler().setLegendVisible(false);
+//        LOCchart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
         JBSplitter chartSplitterPane = new JBSplitter(false);
         chartSplitterPane.setFirstComponent(new XChartPanel(LOCchart));
         chartSplitterPane.setSecondComponent(new XChartPanel(CCchart));

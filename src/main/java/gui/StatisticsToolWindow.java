@@ -13,6 +13,8 @@ import com.intellij.ui.table.JBTable;
 import com.intellij.util.ui.ListTableModel;
 import core.ClassSummary;
 import core.MethodSummary;
+
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -43,7 +45,11 @@ public class StatisticsToolWindow {
         splitterPane.setFirstComponent(generateTable(classItem.getMethodsList()));
 
         //PieCharts as right component
-        splitterPane.setSecondComponent(classItem.getChartsPanel());
+//        splitterPane.setSecondComponent(classItem.getChartsPanel());
+        JBScrollPane scrollPanel = new JBScrollPane(classItem.getChartsPanel());
+
+//        scrollPanel.setPreferredSize(new Dimension( 800,300));
+        splitterPane.setSecondComponent(scrollPanel);
 
         Content content;
         if ((content = toolWindow.getContentManager().findContent(className)) != null) {
