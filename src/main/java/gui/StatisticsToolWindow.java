@@ -18,7 +18,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
-import javax.swing.JComponent;
+import javax.swing.*;
 
 /**
  * This is the graphical report of the method statistics plugin.
@@ -47,7 +47,7 @@ public class StatisticsToolWindow {
         //PieCharts as right component
 //        splitterPane.setSecondComponent(classItem.getChartsPanel());
         JBScrollPane scrollPanel = new JBScrollPane(classItem.getChartsPanel());
-
+        scrollPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 //        scrollPanel.setPreferredSize(new Dimension( 800,300));
         splitterPane.setSecondComponent(scrollPanel);
 
