@@ -2,6 +2,7 @@ package core;
 
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiMethod;
+import gui.ChartFactory;
 
 import javax.swing.*;
 import java.util.Arrays;
