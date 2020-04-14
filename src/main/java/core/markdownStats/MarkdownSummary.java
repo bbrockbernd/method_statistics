@@ -1,6 +1,7 @@
 package core.markdownStats;
 
-import com.intellij.psi.*;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 
 import java.util.Arrays;
 import java.util.List;
@@ -36,7 +37,7 @@ public class MarkdownSummary {
         blockQuotes = visitor.getBlockQuotes().size();
         links = new LinkSummary[visitor.getLinks().size()];
         int i = 0;
-        for(PsiElement link : visitor.getLinks()) {
+        for (PsiElement link : visitor.getLinks()) {
             links[i++] = new LinkSummary(file.getProject(), link, file.getName());
         }
 
