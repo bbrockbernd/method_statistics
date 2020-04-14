@@ -1,7 +1,7 @@
-package gui;
+package gui.methodDisplay;
 
 import com.intellij.util.ui.ColumnInfo;
-import core.MethodSummary;
+import core.methodStats.MethodSummary;
 import java.util.Comparator;
 import org.jetbrains.annotations.Nullable;
 

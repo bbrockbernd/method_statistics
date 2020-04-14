@@ -1,4 +1,4 @@
-package core;
+package core.methodStats;
 
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.AnAction;
@@ -10,7 +10,7 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiManager;
 
-import gui.MethodToolWindow;
+import gui.methodDisplay.MethodToolWindow;
 
 public class MethodAction extends AnAction {
 

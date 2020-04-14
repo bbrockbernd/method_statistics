@@ -1,4 +1,4 @@
-package core;
+package core.markdownStats;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
@@ -12,14 +12,14 @@ import org.intellij.plugins.markdown.lang.MarkdownElementTypes;
  */
 public class LinkSummary {
 
+    private PsiElement link;
     private String fileName;
     private Project project;
-    private String linkName;
-    private PsiElement link;
-    private String type;
 
-    private boolean inThisRepo;
+    private String linkName;
+    private String type;
     private String text;
+    private boolean inThisRepo;
 
     /**
      * Constructor for the markdown summary class.

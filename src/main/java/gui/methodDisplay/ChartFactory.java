@@ -1,7 +1,7 @@
-package gui;
+package gui.methodDisplay;
 
 import com.intellij.ui.JBSplitter;
-import core.MethodSummary;
+import core.methodStats.MethodSummary;
 
 import java.awt.Color;
 import java.util.Random;

@@ -1,4 +1,4 @@
-package core;
+package core.markdownStats;
 
 import static org.intellij.markdown.flavours.gfm.GFMTokenTypes.GFM_AUTOLINK;
 
@@ -13,10 +13,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class MarkdownVisitor extends PsiRecursiveElementVisitor {
 
-    ArrayList<PsiElement> links = new ArrayList<>();
-    int numberOfImages = 0;
-    int numberOfParagraphs = 0;
-    int emails = 0;
+    private ArrayList<PsiElement> links = new ArrayList<>();
+    private int numberOfImages = 0;
+    private int numberOfParagraphs = 0;
 
     @Override
     public void visitElement(@NotNull PsiElement element) {
@@ -52,4 +51,17 @@ public class MarkdownVisitor extends PsiRecursiveElementVisitor {
 
         super.visitElement(element);
     }
+
+    public ArrayList<PsiElement> getLinks() {
+        return links;
+    }
+
+    public int getNumberOfImages() {
+        return numberOfImages;
+    }
+
+    public int getNumberOfParagraphs() {
+        return numberOfParagraphs;
+    }
+
 }

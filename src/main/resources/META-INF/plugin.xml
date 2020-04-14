@@ -20,10 +20,10 @@
 
     <actions>
         <!-- Add your actions here -->
-        <action id="core.MethodAction" class="core.MethodAction" text="Methods Statistics" description="stats">
+        <action id="core.methodStats.MethodAction" class="core.methodStats.MethodAction" text="Methods Statistics" description="stats">
             <add-to-group group-id="ToolsMenu" anchor="first"/>
         </action>
-        <action id="core.MarkdownAction" class="core.MarkdownAction" text="Markdown Action"
+        <action id="core.markdownStats.MarkdownAction" class="core.markdownStats.MarkdownAction" text="Markdown Action"
                 description="See stats about your md files">
             <add-to-group group-id="ToolsMenu" anchor="first"/>
         </action>

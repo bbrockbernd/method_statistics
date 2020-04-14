@@ -1,21 +1,18 @@
-package gui;
+package gui.markdownDisplay;
 
-import com.intellij.codeInsight.documentation.DocumentationComponent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowAnchor;
 import com.intellij.openapi.wm.ToolWindowManager;
-import com.intellij.psi.PsiMethod;
 import com.intellij.ui.JBSplitter;
 import com.intellij.ui.components.JBScrollPane;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import com.intellij.ui.table.JBTable;
 import com.intellij.util.ui.ListTableModel;
-import core.ClassSummary;
-import core.MarkdownGlobalSummary;
-import core.MarkdownSummary;
-import core.MethodSummary;
+import core.markdownStats.LinkSummary;
+import core.markdownStats.MarkdownGlobalSummary;
+import core.markdownStats.MarkdownSummary;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
@@ -42,14 +39,8 @@ public class MarkdownToolWindow {
      */
     public void ShowWindow(MarkdownGlobalSummary summary) {
         //Splitter pane splits the tool window
-        JBSplitter splitterPane = new JBSplitter(false, 0.6f);
-        JBSplitter leftSplitterPane = new JBSplitter(false, 0.5f);
-        generateTable(summary.getMarkdowns(), leftSplitterPane);
-
-        //PieCharts as right component
-        splitterPane.setSecondComponent(new JLabel("Select a method to show documentation",
-            JLabel.CENTER));
-        splitterPane.setFirstComponent(leftSplitterPane);
+        JBSplitter splitterPane = new JBSplitter(false);
+        generateMarkdownTable(summary.getMarkdowns(), splitterPane);
 
         Content content;
         if ((content = toolWindow.getContentManager().findContent("???")) != null) {
@@ -68,13 +59,13 @@ public class MarkdownToolWindow {
      * @param markdowns Found markdown files during analysis.
      * @return returns ui component
      */
-    private void generateTable(List<MarkdownSummary> markdowns, JBSplitter tableSplitter) {
+    private void generateMarkdownTable(List<MarkdownSummary> markdowns, JBSplitter tableSplitter) {
         ListTableModel<MarkdownSummary> model = new ListTableModel<>(
             new MarkdownColumnInfoFactory().getColumnInfos(), markdowns);
         JBTable table = new JBTable(model);
-//        setMouseAdapter(table, markdowns, tableSplitter);
+        setMouseAdapter(table, markdowns, tableSplitter);
         tableSplitter.setFirstComponent(new JBScrollPane(table));
-        tableSplitter.setSecondComponent(new JLabel("Select a method to show documentation",
+        tableSplitter.setSecondComponent(new JLabel("Click the number of links to show details",
             JLabel.CENTER));
     }
 
@@ -82,21 +73,20 @@ public class MarkdownToolWindow {
      * Makes table clickable.
      * After double clicking on a row shows method definition in editor.
      * @param table Table to make clickable.
-     * @param methodItems Found methods in during analyse.
+     * @param markdowns Found markdown files in during analyse.
+     * @param tableSplitter the JBSplitter of the tables
      */
-//    private void setMouseAdapter(JBTable table, List<MarkdownSummary> markdowns, JBSplitter tableSplitter) {
-//        MouseAdapter adapter = new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                int index = table.convertRowIndexToModel(table.getSelectedRow());
-//                PsiMethod method = markdowns.get(index).method;
-//                JComponent component = (JComponent) DocumentationComponent.createAndFetch(method.getProject(), method, () -> {});
-//                tableSplitter.setSecondComponent(component);
-//                if (e.getClickCount() == 2) {
-//                    method.navigate(true);
-//                }
-//            }
-//        };
-//        table.addMouseListener(adapter);
-//    }
+    private void setMouseAdapter(JBTable table, List<MarkdownSummary> markdowns, JBSplitter tableSplitter) {
+        MouseAdapter adapter = new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int index = table.convertRowIndexToModel(table.getSelectedRow());
+                ListTableModel<LinkSummary> model = new ListTableModel<>(
+                        new LinksColumnInfoFactory().getColumnInfos(), markdowns.get(index).getLinks());
+                tableSplitter.setSecondComponent(new JBScrollPane(new JBTable(model)));
+            }
+        };
+        table.addMouseListener(adapter);
+    }
+
 }

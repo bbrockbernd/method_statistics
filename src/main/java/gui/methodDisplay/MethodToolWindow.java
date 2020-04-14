@@ -1,4 +1,4 @@
-package gui;
+package gui.methodDisplay;
 
 import com.intellij.codeInsight.documentation.DocumentationComponent;
 import com.intellij.openapi.project.Project;
@@ -12,8 +12,8 @@ import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import com.intellij.ui.table.JBTable;
 import com.intellij.util.ui.ListTableModel;
-import core.ClassSummary;
-import core.MethodSummary;
+import core.methodStats.ClassSummary;
+import core.methodStats.MethodSummary;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -81,6 +81,7 @@ public class MethodToolWindow {
      * After double clicking on a row shows method definition in editor.
      * @param table Table to make clickable.
      * @param methodItems Found methods in during analyse.
+     * @param tableSplitter the JBSplitter of the tables
      */
     private void setMouseAdapter(JBTable table, List<MethodSummary> methodItems, JBSplitter tableSplitter) {
         MouseAdapter adapter = new MouseAdapter() {

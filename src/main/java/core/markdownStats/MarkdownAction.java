@@ -1,10 +1,10 @@
-package core;
+package core.markdownStats;
 
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
-import gui.MarkdownToolWindow;
+import gui.markdownDisplay.MarkdownToolWindow;
 import org.jetbrains.annotations.NotNull;
 
 public class MarkdownAction extends AnAction {

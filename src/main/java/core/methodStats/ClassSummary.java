@@ -1,8 +1,8 @@
-package core;
+package core.methodStats;
 
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiMethod;
-import gui.ChartFactory;
+import gui.methodDisplay.ChartFactory;
 
 import java.util.Comparator;
 

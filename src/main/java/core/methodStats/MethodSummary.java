@@ -1,4 +1,4 @@
-package core;
+package core.methodStats;
 
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiMethod;
@@ -6,7 +6,6 @@ import com.intellij.psi.PsiType;
 import com.intellij.psi.javadoc.PsiDocComment;
 
 import java.util.Arrays;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Method summary object for storing relevant method data for the plugin.
