@@ -19,6 +19,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 
 /**
  * This is the graphical report of the method statistics plugin.
@@ -41,8 +42,8 @@ public class StatisticsToolWindow {
      */
     public void ShowWindow(String className, ClassSummary classItem) {
         //Splitter pane splits the tool window
-        JBSplitter splitterPane = new JBSplitter(false);
-        JBSplitter leftSplitterPane = new JBSplitter(false);
+        JBSplitter splitterPane = new JBSplitter(false, 0.6f);
+        JBSplitter leftSplitterPane = new JBSplitter(false, 0.5f);
         generateTable(classItem.getMethodsList(), leftSplitterPane);
 
         //PieCharts as right component
@@ -72,6 +73,8 @@ public class StatisticsToolWindow {
         JBTable table = new JBTable(model);
         setMouseAdapter(table, methodItems, tableSplitter);
         tableSplitter.setFirstComponent(new JBScrollPane(table));
+        tableSplitter.setSecondComponent(new JLabel("Select a method to show documentation",
+            JLabel.CENTER));
     }
 
     /**
