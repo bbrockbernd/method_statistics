@@ -1,5 +1,6 @@
 package gui;
 
+import com.intellij.codeInsight.documentation.DocumentationComponent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowAnchor;
@@ -13,8 +14,6 @@ import com.intellij.ui.table.JBTable;
 import com.intellij.util.ui.ListTableModel;
 import core.ClassSummary;
 import core.MethodSummary;
-
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -41,15 +40,16 @@ public class StatisticsToolWindow {
      */
     public void ShowWindow(String className, ClassSummary classItem) {
         //Splitter pane splits the tool window
-        JBSplitter splitterPane = new JBSplitter(false);
-        splitterPane.setFirstComponent(generateTable(classItem.getMethodsList()));
+        JBSplitter splitterPane = new JBSplitter(false, 0.6f);
+        JBSplitter leftSplitterPane = new JBSplitter(false, 0.5f);
+        generateTable(classItem.getMethodsList(), leftSplitterPane);
 
         //PieCharts as right component
-//        splitterPane.setSecondComponent(classItem.getChartsPanel());
         JBScrollPane scrollPanel = new JBScrollPane(classItem.getChartsPanel());
         scrollPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 //        scrollPanel.setPreferredSize(new Dimension( 800,300));
         splitterPane.setSecondComponent(scrollPanel);
+        splitterPane.setFirstComponent(leftSplitterPane);
 
         Content content;
         if ((content = toolWindow.getContentManager().findContent(className)) != null) {
@@ -68,12 +68,14 @@ public class StatisticsToolWindow {
      * @param methodItems Found methods during analsye.
      * @return returns ui component
      */
-    private JComponent generateTable(List<MethodSummary> methodItems) {
+    private void generateTable(List<MethodSummary> methodItems, JBSplitter tableSplitter) {
         ListTableModel<MethodSummary> model = new ListTableModel<>(
             new ColumnInfoFactory().getColumnInfos(), methodItems);
         JBTable table = new JBTable(model);
-        setMouseAdapter(table, methodItems);
-        return new JBScrollPane(table);
+        setMouseAdapter(table, methodItems, tableSplitter);
+        tableSplitter.setFirstComponent(new JBScrollPane(table));
+        tableSplitter.setSecondComponent(new JLabel("Select a method to show documentation",
+            JLabel.CENTER));
     }
 
     /**
@@ -82,13 +84,15 @@ public class StatisticsToolWindow {
      * @param table Table to make clickable.
      * @param methodItems Found methods in during analyse.
      */
-    private void setMouseAdapter(JBTable table, List<MethodSummary> methodItems) {
+    private void setMouseAdapter(JBTable table, List<MethodSummary> methodItems, JBSplitter tableSplitter) {
         MouseAdapter adapter = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                int index = table.convertRowIndexToModel(table.getSelectedRow());
+                PsiMethod method = methodItems.get(index).method;
+                JComponent component = (JComponent) DocumentationComponent.createAndFetch(method.getProject(), method, () -> {});
+                tableSplitter.setSecondComponent(component);
                 if (e.getClickCount() == 2) {
-                    int index = table.convertRowIndexToModel(table.getSelectedRow());
-                    PsiMethod method = methodItems.get(index).method;
                     method.navigate(true);
                 }
             }

@@ -9,11 +9,8 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiManager;
-import com.intellij.psi.PsiMethod;
 
 import gui.StatisticsToolWindow;
-import java.util.ArrayList;
-import java.util.List;
 
 public class StatisticsAction extends AnAction {
 
@@ -21,6 +18,7 @@ public class StatisticsAction extends AnAction {
 
     /**
      * Event listener for the method statistics tool.
+     *
      * @param event ActionEvent
      */
     @Override
@@ -51,8 +49,9 @@ public class StatisticsAction extends AnAction {
     }
 
     /**
-     * Makes sure only one instance of the toolwindow is available.
-     * Is easier to test than a singleton.
+     * Makes sure only one instance of the toolwindow is available. Is easier to test than a
+     * singleton.
+     *
      * @param project CurrentProject
      * @return toolWindow
      */
