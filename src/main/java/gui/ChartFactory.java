@@ -2,8 +2,10 @@ package gui;
 
 import com.intellij.ui.JBSplitter;
 import core.MethodSummary;
+
 import java.awt.Color;
 import java.util.Random;
+
 import org.knowm.xchart.PieChartBuilder;
 import org.knowm.xchart.XChartPanel;
 

@@ -33,13 +33,13 @@ class ColumnInfoFactory {
         @Nullable
         @Override
         public String valueOf(MethodSummary methodItem) {
-            return methodItem.name;
+            return methodItem.getName();
         }
 
         @Nullable
         @Override
         public Comparator<MethodSummary> getComparator() {
-            return Comparator.comparing(o -> o.name);
+            return Comparator.comparing(o -> o.getName());
         }
     }
 
@@ -52,13 +52,13 @@ class ColumnInfoFactory {
         @Nullable
         @Override
         public String valueOf(MethodSummary methodItem) {
-            return Integer.toString(methodItem.cc);
+            return Integer.toString(methodItem.getCC());
         }
 
         @Nullable
         @Override
         public Comparator<MethodSummary> getComparator() {
-            return Comparator.comparingInt(o -> o.cc);
+            return Comparator.comparingInt(o -> o.getCC());
         }
     }
 
@@ -71,13 +71,13 @@ class ColumnInfoFactory {
         @Nullable
         @Override
         public String valueOf(MethodSummary methodItem) {
-            return Integer.toString(methodItem.loc);
+            return Integer.toString(methodItem.getLOC());
         }
 
         @Nullable
         @Override
         public Comparator<MethodSummary> getComparator() {
-            return Comparator.comparingInt(o -> o.loc);
+            return Comparator.comparingInt(o -> o.getLOC());
         }
     }
 
@@ -90,13 +90,13 @@ class ColumnInfoFactory {
         @Nullable
         @Override
         public String valueOf(MethodSummary methodSummary) {
-            return methodSummary.parameterList;
+            return methodSummary.getParameterList();
         }
 
         @Nullable
         @Override
         public Comparator<MethodSummary> getComparator() {
-            return Comparator.comparingInt(o -> o.parameterSize);
+            return Comparator.comparingInt(o -> o.getParameterSize());
         }
     }
 
@@ -109,13 +109,13 @@ class ColumnInfoFactory {
         @Nullable
         @Override
         public String valueOf(MethodSummary methodItem) {
-            return methodItem.returnType;
+            return methodItem.getReturnType();
         }
 
         @Nullable
         @Override
         public Comparator<MethodSummary> getComparator() {
-            return Comparator.comparing(o -> o.returnType);
+            return Comparator.comparing(o -> o.getReturnType());
         }
     }
 }
