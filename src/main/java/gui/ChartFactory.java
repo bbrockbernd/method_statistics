@@ -30,7 +30,7 @@ public class ChartFactory {
                 r.nextInt(256),
                 r.nextInt(256));
             LOCchart.addSeries(methods[i].getName(), methods[i].getLOC());
-            CCchart.addSeries(methods[i].getName(), methods[i].getCC());
+            CCchart.addSeries(methods[i].getName(), methods[i].getLOC());
         }
         LOCchart.getStyler().setSeriesColors(sliceColors);
         LOCchart.getStyler().setLegendVisible(false);
