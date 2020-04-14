@@ -52,13 +52,13 @@ class ColumnInfoFactory {
         @Nullable
         @Override
         public String valueOf(MethodSummary methodItem) {
-            return Integer.toString(methodItem.CC);
+            return Integer.toString(methodItem.cc);
         }
 
         @Nullable
         @Override
         public Comparator<MethodSummary> getComparator() {
-            return Comparator.comparingInt(o -> o.CC);
+            return Comparator.comparingInt(o -> o.cc);
         }
     }
 
@@ -71,13 +71,13 @@ class ColumnInfoFactory {
         @Nullable
         @Override
         public String valueOf(MethodSummary methodItem) {
-            return Integer.toString(methodItem.LOC);
+            return Integer.toString(methodItem.loc);
         }
 
         @Nullable
         @Override
         public Comparator<MethodSummary> getComparator() {
-            return Comparator.comparingInt(o -> o.LOC);
+            return Comparator.comparingInt(o -> o.loc);
         }
     }
 

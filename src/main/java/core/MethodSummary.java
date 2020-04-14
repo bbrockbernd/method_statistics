@@ -8,7 +8,7 @@ import com.intellij.psi.javadoc.PsiDocComment;
 import java.util.Arrays;
 
 /**
- * Method data object for storing relevant method data for the plugin.
+ * Method summary object for storing relevant method data for the plugin.
  */
 public class MethodSummary {
 
@@ -22,9 +22,14 @@ public class MethodSummary {
     public String[] annotations;
     public String documentation;
     public int parameterSize;
-    public int LOC;
-    public int CC;
+    public int loc;
+    public int cc;
 
+    /**
+     * Constructor for the Summary class.
+     * It calculates the statistics for a method.
+     * @param method to analyze.
+     */
     public MethodSummary(PsiMethod method) {
         this.method = method;
         name = method.getName();
@@ -37,8 +42,8 @@ public class MethodSummary {
         extractParametersSize();
         MethodVisitor visitor = new MethodVisitor();
         method.accept(visitor);
-        CC = visitor.getCC();
-        LOC = computeLOC();
+        cc = visitor.getCc();
+        loc = computeLoc();
     }
 
     /**
@@ -47,7 +52,9 @@ public class MethodSummary {
     public void extractDescription() {
         documentation = "no description";
         PsiDocComment doc = method.getDocComment();
-        if(doc == null) return;
+        if (doc == null) {
+            return;
+        }
         documentation = doc.getText();
     }
 
@@ -64,7 +71,9 @@ public class MethodSummary {
     public void extractReturnType() {
         returnType = "void";
         PsiType type = method.getReturnType();
-        if(type == null) return;
+        if (type == null) {
+            return;
+        }
         returnType = type.getPresentableText();
     }
 
@@ -105,7 +114,7 @@ public class MethodSummary {
      *
      * @return the lines of code of the actual method.
      */
-    public int computeLOC() {
+    public int computeLoc() {
         String text = method.getBody().getText();
         int lines = 0;
         boolean emptyLine = true;
@@ -129,11 +138,11 @@ public class MethodSummary {
 
     @Override
     public String toString() {
-        return signature +
-                ", annotations=" + Arrays.toString(annotations) +
-                ", description=" + documentation +
-                ", LOC=" + LOC +
-                ", CC=" + CC;
+        return signature
+                + ", annotations=" + Arrays.toString(annotations)
+                + ", description=" + documentation
+                + ", LOC=" + loc
+                + ", CC=" + cc;
     }
 
     public String getName() {
@@ -141,12 +150,20 @@ public class MethodSummary {
     }
 
     public int getLOC() {
-        return LOC;
+        return loc;
     }
 
 
     public int getCC() {
-        return CC;
+        return cc;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public String getParameterList() {
+        return parameterList;
     }
 }
 

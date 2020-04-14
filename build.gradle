@@ -1,6 +1,8 @@
 plugins {
     id 'java'
     id 'org.jetbrains.intellij' version '0.4.18'
+    id 'checkstyle'
+    id 'jacoco'
 }
 
 group 'org.project.jetbrains'
@@ -13,16 +15,38 @@ repositories {
 }
 
 dependencies {
-    compile files('lib/xchart-3.6.2.jar')
-    compile files('lib/xchart-demo-3.6.2.jar')
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+    compile group: 'org.knowm.xchart', name: 'xchart', version: '3.6.2'
+    compile group: 'org.knowm.xchart', name: 'xchart-demo', version: '3.6.2'
+
 }
+
+test {
+    useJUnitPlatform()
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled false
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+}
+
+
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
     version '2020.1'
     plugins 'java'
 }
+
+checkstyle {
+    toolVersion "8.25"
+    configFile = rootProject.file('config/checkstyle/checkstyle.xml')
+}
+
 patchPluginXml {
     changeNotes """
       Add change notes here.<br>

@@ -1,10 +1,12 @@
-package core;
+package gui;
 
 import com.intellij.ui.JBSplitter;
+import core.MethodSummary;
 import org.knowm.xchart.PieChartBuilder;
 import org.knowm.xchart.XChartPanel;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class ChartFactory {
@@ -19,12 +21,14 @@ public class ChartFactory {
                 .title("CC distribution").build();
         Color[] sliceColors = new Color[methods.length];
         Random r = new Random();
-        for(int i = 0; i < methods.length; i++){
+        for(int i = 0; i < methods.length; i++) {
             sliceColors[i] = new Color(r.nextInt(256),
                     r.nextInt(256),
                     r.nextInt(256));
-            LOCchart.addSeries(methods[i].getName(), methods[i].getLOC());
-            CCchart.addSeries(methods[i].getName(), methods[i].getCC());
+                LOCchart.addSeries(methods[i].getName()
+                        + methods[i].getParameterList(), methods[i].getLOC());
+                CCchart.addSeries(methods[i].getName()
+                        + methods[i].getParameterList(), methods[i].getCC());
         }
         LOCchart.getStyler().setSeriesColors(sliceColors);
         CCchart.getStyler().setSeriesColors(sliceColors);
