@@ -12,15 +12,16 @@ class MethodColumnInfoFactory {
 
     /**
      * Generates the columnvector for the table model.
+     *
      * @return ColumnInfo's
      */
     public ColumnInfo[] getColumnInfos() {
-        return new ColumnInfo[] {
-            new NameInfo(),
-            new CCInfo(),
-            new LOCInfo(),
-            new ParamInfo(),
-            new ReturnInfo()
+        return new ColumnInfo[]{
+                new NameInfo(),
+                new CCInfo(),
+                new LOCInfo(),
+                new ParamInfo(),
+                new ReturnInfo()
         };
     }
 

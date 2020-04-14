@@ -11,9 +11,13 @@ import org.knowm.xchart.XChartPanel;
 
 public class ChartFactory {
 
-    private org.knowm.xchart.PieChart LOCchart;
-    private org.knowm.xchart.PieChart CCchart;
+    private final org.knowm.xchart.PieChart LOCchart;
+    private final org.knowm.xchart.PieChart CCchart;
 
+    /**
+     * Constructor for the CartFactory.
+     * @param methods array for the statistics.
+     */
     public ChartFactory(MethodSummary[] methods) {
         LOCchart = new PieChartBuilder().width(400).height(600)
             .title("LOC distribution").build();
@@ -26,13 +30,17 @@ public class ChartFactory {
                 r.nextInt(256),
                 r.nextInt(256));
             LOCchart.addSeries(methods[i].getName(), methods[i].getLOC());
-            CCchart.addSeries(methods[i].getName(), methods[i].getCC());
+            CCchart.addSeries(methods[i].getName(), methods[i].getLOC());
         }
         LOCchart.getStyler().setSeriesColors(sliceColors);
         LOCchart.getStyler().setLegendVisible(false);
         CCchart.getStyler().setSeriesColors(sliceColors);
     }
 
+    /**
+     * Create a JPanel with the two pie charts.
+     * @return the JBSplitter created.
+     */
     public JBSplitter getPanel() {
         JBSplitter chartSplitterPane = new JBSplitter(false, 0.4f);
         chartSplitterPane.setFirstComponent(new XChartPanel(LOCchart));
