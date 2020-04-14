@@ -7,12 +7,10 @@ import java.util.Random;
 import org.knowm.xchart.PieChartBuilder;
 import org.knowm.xchart.XChartPanel;
 
-import java.awt.Color;
-import java.util.Random;
 public class ChartFactory {
 
-    private final org.knowm.xchart.PieChart locChart;
-    private final org.knowm.xchart.PieChart ccChart;
+    private final org.knowm.xchart.PieChart LOCchart;
+    private final org.knowm.xchart.PieChart CCchart;
 
     /**
      * Constructor for the CartFactory.
