@@ -54,8 +54,7 @@ public class LinkSummary {
         }
         Path path = Paths.get(project.getBasePath(),
                 linkPath);
-        System.out.println(path);
-        System.out.println(Files.exists(path));
+
         return Files.exists(path);
     }
 

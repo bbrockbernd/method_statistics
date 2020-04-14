@@ -3,7 +3,9 @@ package gui.methodDisplay;
 import com.intellij.util.ui.ColumnInfo;
 import core.methodStats.MethodSummary;
 import java.util.Comparator;
+
 import org.jetbrains.annotations.Nullable;
+
 
 /**
  * All the column properties of the gui table are defined here.
@@ -11,16 +13,17 @@ import org.jetbrains.annotations.Nullable;
 class MethodColumnInfoFactory {
 
     /**
-     * Generates the columnvector for the table model.
+     * Generates the column vector for the table model.
+     *
      * @return ColumnInfo's
      */
     public ColumnInfo[] getColumnInfos() {
-        return new ColumnInfo[] {
-            new NameInfo(),
-            new CCInfo(),
-            new LOCInfo(),
-            new ParamInfo(),
-            new ReturnInfo()
+        return new ColumnInfo[]{
+                new NameInfo(),
+                new CCInfo(),
+                new LOCInfo(),
+                new ParamInfo(),
+                new ReturnInfo()
         };
     }
 
