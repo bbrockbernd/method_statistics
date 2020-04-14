@@ -34,11 +34,12 @@ public class MarkdownAction extends AnAction {
                 MarkdownVisitor visitor = new MarkdownVisitor();
                 PsiFile md = PsiManager.getInstance(project).findFile(file);
                 md.accept(visitor);
-
                 for (PsiElement link : visitor.links) {
-                    MarkdownSummary markdownSummary = new MarkdownSummary(link, file.getName());
+                    MarkdownSummary markdownSummary =
+                            new MarkdownSummary(project, link, file.getName());
                     dlgMsg.append("\n" + markdownSummary.toString() + "\n");
                 }
+                dlgMsg.append(visitor.numberOfImages + " " + visitor.numberOfParagraphs + "\n");
             }
         }
 

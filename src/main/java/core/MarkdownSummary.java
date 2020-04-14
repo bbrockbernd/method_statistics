@@ -1,34 +1,58 @@
 package core;
 
+import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.search.FilenameIndex;
-import com.intellij.util.indexing.FileBasedIndex;
-import org.intellij.plugins.markdown.lang.MarkdownElementType;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import org.intellij.plugins.markdown.lang.MarkdownElementTypes;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
+/**
+ * Creates a summary of every link in the markdown file.
+ */
 public class MarkdownSummary {
 
     private String fileName;
+    private Project project;
     private String linkName;
     private PsiElement link;
     private String type;
-    private boolean available;
 
-    public MarkdownSummary(PsiElement link, String fileName) {
+    private boolean inThisRepo;
+    private String text;
+
+    /**
+     * Constructor for the markdown summary class.
+     * Creates the statistics for a link in this file.
+     * @param project the current project.
+     * @param link the parsed link.
+     * @param fileName filename where the link was found.
+     */
+    public MarkdownSummary(Project project, PsiElement link, String fileName) {
+        this.project = project;
         this.link = link;
         this.fileName = fileName;
         this.linkName = link.getText();
         this.type = extractType();
-        this.available = extractAvailability();
+        this.inThisRepo = extractAvailability();
+        this.text = extractText();
+    }
+
+    private String extractText() {
+        if (link.getNode().getElementType()
+                == MarkdownElementTypes.LINK_DESTINATION) {
+            String parent = link.getParent().getText();
+            return parent.substring(parent.indexOf("[") + 1, parent.lastIndexOf("]"));
+        }
+        return "no cover";
     }
 
     private boolean extractAvailability() {
-        if (link.getNode().getElementType() == MarkdownElementTypes.LINK_DESTINATION)
-                return Files.exists(Paths.get(linkName));
-        return true;
+        Path path = Paths.get(project.getBasePath(),
+                linkName.substring(linkName.indexOf("/") + 1));
+        System.out.println(path);
+        System.out.println(Files.exists(path));
+        return Files.exists(path);
     }
 
     private String extractType() {
@@ -43,13 +67,25 @@ public class MarkdownSummary {
         return linkName;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public boolean isInThisRepo() {
+        return inThisRepo;
+    }
+
+    public String getText() {
+        return text;
+    }
+
     @Override
     public String toString() {
-        return "MarkdownSummary{" +
-                "fileName='" + fileName + '\'' +
-                ", linkName='" + linkName + '\'' +
-                ", type='" + type + '\'' +
-                ", available=" + available +
-                '}';
+        return "MarkdownSummary{"
+                + "fileName='" + fileName + '\''
+                + ", linkName='" + linkName + '\''
+                + ", type='" + type + '\''
+                + ", cover=" + text + '\''
+                + ", in this repo= " + inThisRepo + '\'' + '}';
     }
 }
