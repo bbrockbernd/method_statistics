@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 class MethodColumnInfoFactory {
 
     /**
-     * Generates the columnvector for the table model.
+     * Generates the column vector for the table model.
      *
      * @return ColumnInfo's
      */
