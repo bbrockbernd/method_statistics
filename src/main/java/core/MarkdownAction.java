@@ -3,22 +3,9 @@ package core;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiJavaFile;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.search.FilenameIndex;
-
-import java.util.ArrayList;
-
 import gui.MarkdownToolWindow;
-import gui.MethodToolWindow;
 import org.jetbrains.annotations.NotNull;
-
 
 public class MarkdownAction extends AnAction {
 
