@@ -7,12 +7,13 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.search.FilenameIndex;
+
+import java.util.ArrayList;
 import org.jetbrains.annotations.NotNull;
 
 
-import java.util.ArrayList;
-
 public class MarkdownAction extends AnAction {
+
     /**
      * Implement this method to provide your action handler.
      *
@@ -24,7 +25,7 @@ public class MarkdownAction extends AnAction {
         if (project != null) {
             ArrayList<VirtualFile> mdFiles = (ArrayList<VirtualFile>)
                     FilenameIndex.getAllFilesByExt(project, "md");
-            for(VirtualFile file: mdFiles) {
+            for (VirtualFile file : mdFiles) {
                 MarkdownVisitor visitor = new MarkdownVisitor();
                 PsiFile md = PsiManager.getInstance(project).findFile(file);
                 md.accept(visitor);
