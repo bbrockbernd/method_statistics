@@ -46,7 +46,7 @@ public class StatisticsToolWindow {
         splitterPane.setSecondComponent(classItem.getChartsPanel());
 
         Content content;
-        if((content = toolWindow.getContentManager().findContent(className)) != null){
+        if ((content = toolWindow.getContentManager().findContent(className)) != null) {
             content.setComponent(splitterPane);
         } else {
             ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
@@ -66,7 +66,7 @@ public class StatisticsToolWindow {
         ListTableModel<MethodSummary> model = new ListTableModel<>(
             new ColumnInfoFactory().getColumnInfos(), methodItems);
         JBTable table = new JBTable(model);
-       setMouseAdapter(table, methodItems);
+        setMouseAdapter(table, methodItems);
         return new JBScrollPane(table);
     }
 
