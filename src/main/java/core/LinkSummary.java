@@ -10,7 +10,7 @@ import org.intellij.plugins.markdown.lang.MarkdownElementTypes;
 /**
  * Creates a summary of every link in the markdown file.
  */
-public class MarkdownSummary {
+public class LinkSummary {
 
     private String fileName;
     private Project project;
@@ -28,7 +28,7 @@ public class MarkdownSummary {
      * @param link the parsed link.
      * @param fileName filename where the link was found.
      */
-    public MarkdownSummary(Project project, PsiElement link, String fileName) {
+    public LinkSummary(Project project, PsiElement link, String fileName) {
         this.project = project;
         this.link = link;
         this.fileName = fileName;
@@ -85,7 +85,7 @@ public class MarkdownSummary {
 
     @Override
     public String toString() {
-        return "MarkdownSummary{"
+        return "LinkSummary{"
                 + "fileName='" + fileName + '\''
                 + ", linkName='" + linkName + '\''
                 + ", type='" + type + '\''

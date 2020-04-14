@@ -35,9 +35,9 @@ public class MarkdownAction extends AnAction {
                 PsiFile md = PsiManager.getInstance(project).findFile(file);
                 md.accept(visitor);
                 for (PsiElement link : visitor.links) {
-                    MarkdownSummary markdownSummary =
-                            new MarkdownSummary(project, link, file.getName());
-                    dlgMsg.append("\n" + markdownSummary.toString() + "\n");
+                    LinkSummary linkSummary =
+                            new LinkSummary(project, link, file.getName());
+                    dlgMsg.append("\n" + linkSummary.toString() + "\n");
                 }
                 dlgMsg.append(visitor.numberOfImages + " " + visitor.numberOfParagraphs + "\n");
             }
