@@ -1,17 +1,15 @@
 package core;
 
-import com.intellij.psi.PsiConditionalExpression;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiForStatement;
-import com.intellij.psi.PsiForeachStatement;
-import com.intellij.psi.PsiIfStatement;
-import com.intellij.psi.PsiRecursiveElementWalkingVisitor;
-import com.intellij.psi.PsiStatement;
-import com.intellij.psi.PsiTryStatement;
-import com.intellij.psi.PsiWhileStatement;
+import com.intellij.psi.*;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+
+import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
+
+import static com.intellij.psi.util.PsiTreeUtil.findChildrenOfType;
 
 class MethodVisitor extends PsiRecursiveElementWalkingVisitor {
 
@@ -28,13 +26,22 @@ class MethodVisitor extends PsiRecursiveElementWalkingVisitor {
         }
 
         //increase CC by one for each decision point
-        //TODO: consider && and ||
-        if (element instanceof PsiIfStatement
-                || element instanceof PsiForStatement
-                || element instanceof PsiForeachStatement
-                || element instanceof PsiWhileStatement
-                || element instanceof PsiConditionalExpression
-                || element instanceof PsiTryStatement) {
+        if (element instanceof PsiIfStatement) {
+            checkCond(((PsiIfStatement) element).getCondition());
+        }
+        if (element instanceof PsiForStatement) {
+            checkCond(((PsiForStatement) element).getCondition());
+        }
+        if (element instanceof PsiForeachStatement) {
+            cc++;
+        }
+        if (element instanceof PsiWhileStatement) {
+            checkCond(((PsiWhileStatement) element).getCondition());
+        }
+        if (element instanceof PsiConditionalExpression) {
+            checkCond(((PsiConditionalExpression) element).getCondition());
+        }
+        if (element instanceof PsiTryStatement) {
             cc++;
         }
 
@@ -47,5 +54,20 @@ class MethodVisitor extends PsiRecursiveElementWalkingVisitor {
 
     public int getCc() {
         return cc;
+    }
+
+    private void checkCond(PsiExpression cond){
+        cc++;
+        if (cond != null) {
+            Collection<PsiBinaryExpression> binExpressions = findChildrenOfType(cond, PsiBinaryExpression.class);
+            if (binExpressions != null) {
+                binExpressions.forEach((exp) -> {
+                    if (exp.getOperationTokenType().equals(JavaTokenType.ANDAND)
+                            || exp.getOperationTokenType().equals(JavaTokenType.OROR)) {
+                        cc++;
+                    }
+                });
+            }
+        }
     }
 }
