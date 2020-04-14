@@ -49,6 +49,9 @@ public class LinkSummary {
 
     private boolean extractAvailability() {
         String linkPath = linkName;
+        if (linkPath.startsWith("http://") || linkPath.startsWith("https://")) {
+            return false;
+        }
         if (linkPath.startsWith(".") || linkPath.startsWith("/")) {
             linkPath = linkPath.substring(linkPath.indexOf("/") + 1);
         }
