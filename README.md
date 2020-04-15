@@ -6,11 +6,11 @@ Method and Markdown Statistics Plugin
 
 As the name suggests, this is an IntelliJ plugin for analyzing your methods and markdown files.
 
-How to build:
+How to build
 -------------
 You can simply download or clone the project and run `gradle runIde` using IntelliJ IDEA. A new IDE will open up where you can follow the steps below.
 
-Features:
+Features
 ---------
 Both implemented features can be found in the Tools menu bar:
 
