@@ -1,4 +1,4 @@
-package core;
+package core.methodStats;
 
 import com.intellij.psi.*;
 import java.util.Collection;

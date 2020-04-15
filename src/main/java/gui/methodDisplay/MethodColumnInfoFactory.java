@@ -1,18 +1,17 @@
-package gui;
+package gui.methodDisplay;
 
 import com.intellij.util.ui.ColumnInfo;
-import core.MethodSummary;
-import org.jetbrains.annotations.Nullable;
-
+import core.methodStats.MethodSummary;
 import java.util.Comparator;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * All the column properties of the gui table are defined here.
  */
-class ColumnInfoFactory {
+class MethodColumnInfoFactory {
 
     /**
-     * Generates the columnvector for the table model.
+     * Generates the column vector for the table model.
      *
      * @return ColumnInfo's
      */

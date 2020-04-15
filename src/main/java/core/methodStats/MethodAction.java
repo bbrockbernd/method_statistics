@@ -1,4 +1,4 @@
-package core;
+package core.methodStats;
 
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.AnAction;
@@ -10,11 +10,11 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiManager;
 
-import gui.StatisticsToolWindow;
+import gui.methodDisplay.MethodToolWindow;
 
-public class StatisticsAction extends AnAction {
+public class MethodAction extends AnAction {
 
-    private StatisticsToolWindow toolWindow;
+    private MethodToolWindow toolWindow;
 
     /**
      * Event listener for the method statistics tool.
@@ -55,9 +55,9 @@ public class StatisticsAction extends AnAction {
      * @param project CurrentProject
      * @return toolWindow
      */
-    StatisticsToolWindow getToolWindow(Project project) {
+    MethodToolWindow getToolWindow(Project project) {
         if (toolWindow == null) {
-            toolWindow = new StatisticsToolWindow(project);
+            toolWindow = new MethodToolWindow(project);
         }
         return toolWindow;
     }
