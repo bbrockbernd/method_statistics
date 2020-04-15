@@ -1,18 +1,22 @@
-package gui;
+package gui.methodDisplay;
 
 import com.intellij.ui.JBSplitter;
-import core.MethodSummary;
 import org.knowm.xchart.PieChartBuilder;
 import org.knowm.xchart.XChartPanel;
+import core.methodStats.MethodSummary;
 
 import java.awt.Color;
 import java.util.Random;
 
 public class ChartFactory {
 
-    private org.knowm.xchart.PieChart LOCchart;
-    private org.knowm.xchart.PieChart CCchart;
+    private final org.knowm.xchart.PieChart LOCchart;
+    private final org.knowm.xchart.PieChart CCchart;
 
+    /**
+     * Constructor for the CartFactory.
+     * @param methods array for the statistics.
+     */
     public ChartFactory(MethodSummary[] methods) {
         LOCchart = new PieChartBuilder().width(800).height(600)
             .title("LOC distribution").build();
@@ -27,7 +31,7 @@ public class ChartFactory {
             sliceColors[i] = color;
             methods[i].setColor(color);
             LOCchart.addSeries(methods[i].getName(), methods[i].getLOC());
-            CCchart.addSeries(methods[i].getName(), methods[i].getCC());
+            CCchart.addSeries(methods[i].getName(), methods[i].getLOC());
         }
         LOCchart.getStyler().setSeriesColors(sliceColors);
         LOCchart.getStyler().setLegendVisible(false);
@@ -35,6 +39,10 @@ public class ChartFactory {
         CCchart.getStyler().setLegendVisible(false);
     }
 
+    /**
+     * Create a JPanel with the two pie charts.
+     * @return the JBSplitter created.
+     */
     public JBSplitter getPanel() {
         JBSplitter chartSplitterPane = new JBSplitter(false, 0.4f);
 

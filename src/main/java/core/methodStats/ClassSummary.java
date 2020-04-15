@@ -1,8 +1,9 @@
-package core;
+package core.methodStats;
 
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiMethod;
-import gui.ChartFactory;
+import gui.methodDisplay.ChartFactory;
+
 
 import java.util.Comparator;
 
@@ -52,10 +53,18 @@ public class ClassSummary {
                 + '}';
     }
 
+    /**
+     *
+     * @return the panel with pie charts
+     */
     public JPanel getChartsPanel() {
         return chartsPanel;
     }
 
+    /**
+     *
+     * @return list of method summaries in this class.
+     */
     public List<MethodSummary> getMethodsList() {
         return Arrays.asList(methods);
     }
