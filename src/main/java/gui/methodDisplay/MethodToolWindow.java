@@ -12,13 +12,15 @@ import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import com.intellij.ui.table.JBTable;
 import com.intellij.util.ui.ListTableModel;
+
+import java.awt.*;
 import core.methodStats.ClassSummary;
 import core.methodStats.MethodSummary;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  * This is the graphical report of the method statistics plugin.
@@ -70,6 +72,21 @@ public class MethodToolWindow {
         ListTableModel<MethodSummary> model = new ListTableModel<>(
             new MethodColumnInfoFactory().getColumnInfos(), methodItems);
         JBTable table = new JBTable(model);
+        table.setDefaultRenderer(table.getColumnClass(0), new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                                                           boolean hasFocus, int row, int column) {
+                MethodSummary method = model.getItem(row);
+                if (column == 0) {
+                    setBackground(method.getColor());
+                }
+                else {
+                    setBackground(Color.white);
+                }
+
+                return super.getTableCellRendererComponent(table, value, isSelected,
+                        hasFocus, row, column);
+            }
+        });
         setMouseAdapter(table, methodItems, tableSplitter);
         tableSplitter.setFirstComponent(new JBScrollPane(table));
         tableSplitter.setSecondComponent(new JLabel("Select a method to show documentation",

@@ -2,6 +2,9 @@ package core.methodStats;
 
 import com.intellij.psi.PsiMethod;
 
+import java.awt.*;
+import java.util.Arrays;
+
 /**
  * Method summary object for storing relevant method data for the plugin.
  */
@@ -14,6 +17,7 @@ public class MethodSummary {
     private int parameterSize;
     private int loc;
     private int cc;
+    private Color color;
 
     /**
      * Constructor for the Summary class.
@@ -90,6 +94,14 @@ public class MethodSummary {
 
     public int getCC() {
         return cc;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 }
 
