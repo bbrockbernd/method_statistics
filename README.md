@@ -8,23 +8,25 @@ As the name suggests, this is an IntelliJ plugin for analyzing your methods and 
 
 How to build:
 -------------
-You can simply download or clone the project and run `gradle runIde`.
+You can simply download or clone the project and run `gradle runIde` using IntelliJ IDEA. A new IDE will open up where you can follow the steps below.
 
 Features:
 ---------
-Both implemented features can be found in the tool menu bar:
+Both implemented features can be found in the Tools menu bar:
 
 <img src="images/actions.png" alt="Tools" width="200"/>
 
-### Method summary:
+### Method statistics plugin
 
-For the method summary we measure Cyclomatic Complexity(CC) and Lines of Code(LOC) and show their distribution over a class:
+For the method summary we measure the Cyclomatic Complexity(CC) and the Lines of Code(LOC) metrics and show their distribution over a class. Clicking on a method in the table above will show its summary.
 
 <img src="images/methods.png" alt="Example distribution of CC and LOC" width="800"/>
 
 <img src="images/method_signatures.png" alt="Method signature" width="800"/>
 
-### Markdown link summary:
+Double clicking on a method will reposition the mouse cursor on the respective method in the opened class.
+
+### Markdown statistics plugin
 
 For our markdown feature we display basic features like number of links and paragraphs as seen in the example:
 
