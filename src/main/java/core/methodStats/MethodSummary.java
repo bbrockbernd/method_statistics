@@ -39,7 +39,7 @@ public class MethodSummary {
      * @return the lines of code of the actual method.
      */
     public int computeLoc() {
-        String text = method.getBody().getText();
+        String text = method.getBody() == null ? "" : method.getBody().getText();
         int lines = 0;
         boolean emptyLine = true;
         final char[] chars = text.toCharArray();

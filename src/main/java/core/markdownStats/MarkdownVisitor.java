@@ -24,58 +24,54 @@ public class MarkdownVisitor extends PsiRecursiveElementVisitor {
     @Override
     public void visitElement(@NotNull PsiElement element) {
 
-        if (element instanceof PsiElement) {
+        //get links that are covered by picture or text
+        if (element instanceof MarkdownLinkDestinationImpl
+                && element.getNode().getElementType()
+                == MarkdownElementTypes.LINK_DESTINATION) {
+            links.add(element);
+        }
 
-            //get links that are covered by picture or text
-            if (element.getClass().equals(MarkdownLinkDestinationImpl.class)
-                    && element.getNode().getElementType()
-                    == MarkdownElementTypes.LINK_DESTINATION) {
-                links.add(element);
-            }
+        //get simple links that are not covered by picture or text
+        if (element.getNode().getElementType()
+                == MarkdownElementType.platformType(GFM_AUTOLINK)
+                && element.getParent().getNode().getElementType()
+                != MarkdownElementTypes.LINK_DESTINATION) {
+            links.add(element);
+        }
 
-            //get simple links that are not covered by picture or text
-            if (element.getNode().getElementType()
-                    == MarkdownElementType.platformType(GFM_AUTOLINK)
-                    && element.getParent().getNode().getElementType()
-                    != MarkdownElementTypes.LINK_DESTINATION) {
-                links.add(element);
-            }
+        //get number of images in this markdown file
+        if (element.getNode().getElementType() == MarkdownElementTypes.IMAGE) {
+            numberOfImages++;
+        }
 
-            //get number of images in this markdown file
-            if (element.getNode().getElementType() == MarkdownElementTypes.IMAGE) {
-                numberOfImages++;
-            }
+        //get number of paragraphs in this markdown file
+        if (element.getNode().getElementType() == MarkdownElementTypes.PARAGRAPH) {
+            numberOfParagraphs++;
+        }
 
-            //get number of paragraphs in this markdown file
-            if (element.getNode().getElementType() == MarkdownElementTypes.PARAGRAPH) {
-                numberOfParagraphs++;
-            }
+        //get all the headers from the markdown file
+        if (element.getNode().getElementType() == MarkdownElementTypes.ATX_1
+                || element.getNode().getElementType() == MarkdownElementTypes.ATX_2
+                || element.getNode().getElementType() == MarkdownElementTypes.ATX_3
+                || element.getNode().getElementType() == MarkdownElementTypes.ATX_4
+                || element.getNode().getElementType() == MarkdownElementTypes.ATX_5
+                || element.getNode().getElementType() == MarkdownElementTypes.ATX_6) {
+            headers.add(element.getText());
+        }
 
-            //get all the headers from the markdown file
-            if (element.getNode().getElementType() == MarkdownElementTypes.ATX_1
-                    || element.getNode().getElementType() == MarkdownElementTypes.ATX_2
-                    || element.getNode().getElementType() == MarkdownElementTypes.ATX_3
-                    || element.getNode().getElementType() == MarkdownElementTypes.ATX_4
-                    || element.getNode().getElementType() == MarkdownElementTypes.ATX_5
-                    || element.getNode().getElementType() == MarkdownElementTypes.ATX_6) {
-                headers.add(element.getText());
-            }
+        //get the number of tables in this markdown file
+        if (element.getNode().getElementType() == MarkdownElementTypes.TABLE) {
+            numberOfTables++;
+        }
 
-            //get the number of tables in this markdown file
-            if (element.getNode().getElementType() == MarkdownElementTypes.TABLE) {
-                numberOfTables++;
-            }
+        //get the tables' headers
+        if (element.getNode().getElementType() == MarkdownElementTypes.TABLE_HEADER) {
+            tableHeaders.add(element.getText());
+        }
 
-            //get the tables' headers
-            if (element.getNode().getElementType() == MarkdownElementTypes.TABLE_HEADER) {
-                tableHeaders.add(element.getText());
-            }
-
-            //get the block-quotes
-            if (element.getNode().getElementType() == MarkdownElementTypes.BLOCK_QUOTE) {
-                blockQuotes.add(element.getText());
-            }
-
+        //get the block-quotes
+        if (element.getNode().getElementType() == MarkdownElementTypes.BLOCK_QUOTE) {
+            blockQuotes.add(element.getText());
         }
 
         super.visitElement(element);

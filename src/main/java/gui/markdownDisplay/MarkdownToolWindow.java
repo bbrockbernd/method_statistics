@@ -110,9 +110,9 @@ public class MarkdownToolWindow {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int index = table.convertRowIndexToModel(table.getSelectedRow());
-                PsiElement link = links.get(index).getLink();
+                LinkSummary link = links.get(index);
                 if (e.getClickCount() == 2) {
-//                    link.navigate(true);
+                    link.navigate(true);
                 }
             }
         };

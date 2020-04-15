@@ -2,10 +2,12 @@ package core.markdownStats;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.impl.source.tree.LeafPsiElement;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.intellij.plugins.markdown.lang.MarkdownElementTypes;
+import org.intellij.plugins.markdown.lang.psi.impl.MarkdownLinkDestinationImpl;
 
 /**
  * Creates a summary of every link in the markdown file.
@@ -49,7 +51,7 @@ public class LinkSummary {
 
     private boolean extractAvailability() {
         String linkPath = linkName;
-        if (linkPath.startsWith("http://") || linkPath.startsWith("https://")) {
+        if (linkPath.startsWith("http:") || linkPath.startsWith("https:")) {
             return false;
         }
         if (linkPath.startsWith(".") || linkPath.startsWith("/")) {
@@ -58,6 +60,16 @@ public class LinkSummary {
         Path path = Paths.get(project.getBasePath(),
                 linkPath);
         return Files.exists(path);
+    }
+
+    public void navigate(boolean focus) {
+        if (link instanceof MarkdownLinkDestinationImpl) {
+            MarkdownLinkDestinationImpl navigatableLink = (MarkdownLinkDestinationImpl) link;
+            navigatableLink.navigate(focus);
+        } else if (link instanceof LeafPsiElement) {
+            LeafPsiElement navigatableLink = (LeafPsiElement) link;
+            navigatableLink.navigate(focus);
+        }
     }
 
     private String extractType() {
