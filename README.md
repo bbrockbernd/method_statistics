@@ -13,4 +13,4 @@ You can simply download or clone the project and run `gradle runIde`.
 Features:
 ---------
 Both implemented features can be found in the tool menu bar:
-![Tools](images/actions.jpg =100x20)
+![tools](images/actions.png = 200x200)
