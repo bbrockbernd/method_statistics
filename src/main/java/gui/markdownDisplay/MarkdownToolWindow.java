@@ -1,5 +1,6 @@
 package gui.markdownDisplay;
 
+import com.intellij.icons.AllIcons;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowAnchor;
@@ -54,6 +55,7 @@ public class MarkdownToolWindow {
             toolWindow.getContentManager().addContent(content);
         }
         toolWindow.getContentManager().setSelectedContent(content);
+        toolWindow.setIcon(AllIcons.Ide.Rating);
         toolWindow.show();
     }
 
