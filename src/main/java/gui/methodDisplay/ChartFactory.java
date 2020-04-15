@@ -44,7 +44,7 @@ public class ChartFactory {
      * @return the JBSplitter created.
      */
     public JBSplitter getPanel() {
-        JBSplitter chartSplitterPane = new JBSplitter(false, 0.4f);
+        JBSplitter chartSplitterPane = new JBSplitter(false, 0.5f);
 
         chartSplitterPane.setFirstComponent(new XChartPanel(LOCchart));
         chartSplitterPane.setSecondComponent(new XChartPanel(CCchart));
