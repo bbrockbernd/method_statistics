@@ -5,6 +5,7 @@ import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiType;
 import com.intellij.psi.javadoc.PsiDocComment;
 
+import java.awt.*;
 import java.util.Arrays;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,6 +26,8 @@ public class MethodSummary {
     private int parameterSize;
     private int loc;
     private int cc;
+
+    private Color color;
 
     /**
      * Constructor for the Summary class.
@@ -177,6 +180,14 @@ public class MethodSummary {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 }
 

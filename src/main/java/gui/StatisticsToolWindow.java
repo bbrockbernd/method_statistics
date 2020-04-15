@@ -6,6 +6,8 @@ import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowAnchor;
 import com.intellij.openapi.wm.ToolWindowManager;
 import com.intellij.psi.PsiMethod;
+import com.intellij.refactoring.ui.ColorConfiguringCellRenderer;
+import com.intellij.ui.JBColor;
 import com.intellij.ui.JBSplitter;
 import com.intellij.ui.components.JBScrollPane;
 import com.intellij.ui.content.Content;
@@ -14,10 +16,17 @@ import com.intellij.ui.table.JBTable;
 import com.intellij.util.ui.ListTableModel;
 import core.ClassSummary;
 import core.MethodSummary;
+import org.jdesktop.swingx.decorator.ColorHighlighter;
+import org.jdesktop.swingx.renderer.DefaultTableRenderer;
+import org.jetbrains.annotations.Nullable;
+
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableModel;
 
 /**
  * This is the graphical report of the method statistics plugin.
@@ -72,6 +81,21 @@ public class StatisticsToolWindow {
         ListTableModel<MethodSummary> model = new ListTableModel<>(
             new ColumnInfoFactory().getColumnInfos(), methodItems);
         JBTable table = new JBTable(model);
+        table.setDefaultRenderer(table.getColumnClass(0), new DefaultTableCellRenderer() {
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                                                           boolean hasFocus, int row, int column) {
+                MethodSummary method = model.getItem(row);
+                if (column == 0) {
+                    setBackground(method.getColor());
+                }
+                else {
+                    setBackground(Color.white);
+                }
+
+                return super.getTableCellRendererComponent(table, value, isSelected,
+                        hasFocus, row, column);
+            }
+        });
         setMouseAdapter(table, methodItems, tableSplitter);
         tableSplitter.setFirstComponent(new JBScrollPane(table));
         tableSplitter.setSecondComponent(new JLabel("Select a method to show documentation",

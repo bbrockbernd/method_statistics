@@ -2,6 +2,8 @@ package gui;
 
 import com.intellij.util.ui.ColumnInfo;
 import core.MethodSummary;
+
+import java.util.Arrays;
 import java.util.Comparator;
 import org.jetbrains.annotations.Nullable;
 
@@ -22,6 +24,10 @@ class ColumnInfoFactory {
             new ParamInfo(),
             new ReturnInfo()
         };
+    }
+
+    public Class[] getColumnClasses() {
+        return new Class[]{NameInfo.class, CCInfo.class, LOCInfo.class,ParamInfo.class,ReturnInfo.class};
     }
 
     static class NameInfo extends ColumnInfo<MethodSummary, String> {
