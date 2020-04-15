@@ -9,7 +9,6 @@ import static org.mockito.Mockito.when;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
-import core.markdownStats.LinkSummary;
 import org.intellij.plugins.markdown.lang.MarkdownElementTypes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
