@@ -1,7 +1,6 @@
 package core.methodStats;
 
 import com.intellij.psi.PsiMethod;
-import java.util.Arrays;
 
 /**
  * Method summary object for storing relevant method data for the plugin.
@@ -59,19 +58,6 @@ public class MethodSummary {
             lines++;
         }
         return lines;
-    }
-
-    @Override
-    public String toString() {
-        return "MethodSummary{" +
-            "method=" + method +
-            ", name='" + name + '\'' +
-            ", parameterList='" + parameterList + '\'' +
-            ", returnType='" + returnType + '\'' +
-            ", parameterSize=" + parameterSize +
-            ", loc=" + loc +
-            ", cc=" + cc +
-            '}';
     }
 
     public PsiMethod getMethod() {

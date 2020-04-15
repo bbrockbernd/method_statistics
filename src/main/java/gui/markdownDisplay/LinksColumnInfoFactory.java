@@ -2,9 +2,10 @@ package gui.markdownDisplay;
 
 import com.intellij.util.ui.ColumnInfo;
 import core.markdownStats.LinkSummary;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Comparator;
+import org.jetbrains.annotations.Nullable;
+
 
 /**
  * All the column properties of the gui table are defined here.
@@ -42,6 +43,7 @@ public class LinksColumnInfoFactory {
             return Comparator.comparing(o -> o.getLinkName());
         }
     }
+
     static class TypeInfo extends ColumnInfo<LinkSummary, String> {
 
         public TypeInfo() {
@@ -60,6 +62,7 @@ public class LinksColumnInfoFactory {
             return Comparator.comparing(o -> o.getType());
         }
     }
+
     static class CoverInfo extends ColumnInfo<LinkSummary, String> {
 
         public CoverInfo() {
@@ -78,6 +81,7 @@ public class LinksColumnInfoFactory {
             return Comparator.comparing(o -> o.getText());
         }
     }
+
     static class LocationInfo extends ColumnInfo<LinkSummary, String> {
 
         public LocationInfo() {

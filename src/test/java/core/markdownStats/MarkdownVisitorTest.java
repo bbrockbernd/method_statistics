@@ -1,12 +1,9 @@
 package core.markdownStats;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import java.util.ArrayList;
 import org.intellij.markdown.flavours.gfm.GFMTokenTypes;

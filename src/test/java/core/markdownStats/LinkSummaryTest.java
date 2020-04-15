@@ -1,6 +1,7 @@
-package core;
+package core.markdownStats;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -8,7 +9,6 @@ import static org.mockito.Mockito.when;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
-import core.markdownStats.LinkSummary;
 import org.intellij.plugins.markdown.lang.MarkdownElementTypes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -60,5 +60,11 @@ public class LinkSummaryTest {
     public void testInThisRepo() {
         LinkSummary summary = new LinkSummary(project, element, "filename");
         assertFalse(summary.isInThisRepo());
+    }
+
+    @Test
+    public void testGetLink() {
+        LinkSummary summary = new LinkSummary(project, element, "filename");
+        assertNotNull(summary.getLink());
     }
 }

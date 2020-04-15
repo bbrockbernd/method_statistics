@@ -1,6 +1,7 @@
 package core.markdownStats;
 
-import com.intellij.psi.*;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,10 +26,9 @@ public class MarkdownSummary {
      * It calculates the statistics for a markdown file.
      * @param file markdown file to analyze.
      */
-    public MarkdownSummary(PsiFile file) {
+    public MarkdownSummary(PsiFile file, MarkdownVisitor visitor) {
         this.file = file;
         name = file.getName();
-        MarkdownVisitor visitor = new MarkdownVisitor();
         file.accept(visitor);
         numberOfImages = visitor.getNumberOfImages();
         numberOfParagraphs = visitor.getNumberOfParagraphs();
@@ -37,7 +37,7 @@ public class MarkdownSummary {
         blockQuotes = visitor.getBlockQuotes().size();
         links = new LinkSummary[visitor.getLinks().size()];
         int i = 0;
-        for(PsiElement link : visitor.getLinks()) {
+        for (PsiElement link : visitor.getLinks()) {
             links[i++] = new LinkSummary(file.getProject(), link, file.getName());
         }
 

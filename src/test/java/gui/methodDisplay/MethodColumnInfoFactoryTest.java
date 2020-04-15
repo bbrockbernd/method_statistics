@@ -1,7 +1,6 @@
 package gui.methodDisplay;
 
 import com.intellij.util.ui.ColumnInfo;
-import gui.methodDisplay.MethodColumnInfoFactory;
 import junit.framework.TestCase;
 
 import org.junit.jupiter.api.BeforeEach;
