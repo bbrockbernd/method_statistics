@@ -64,19 +64,6 @@ public class MethodSummary {
         return lines;
     }
 
-    @Override
-    public String toString() {
-        return "MethodSummary{" +
-            "method=" + method +
-            ", name='" + name + '\'' +
-            ", parameterList='" + parameterList + '\'' +
-            ", returnType='" + returnType + '\'' +
-            ", parameterSize=" + parameterSize +
-            ", loc=" + loc +
-            ", cc=" + cc +
-            '}';
-    }
-
     public PsiMethod getMethod() {
         return method;
     }

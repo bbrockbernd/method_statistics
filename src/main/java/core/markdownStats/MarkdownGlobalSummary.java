@@ -2,10 +2,13 @@ package core.markdownStats;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.*;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiManager;
 import com.intellij.psi.search.FilenameIndex;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Class that creates a human readable summary of a Java class.
@@ -31,7 +34,8 @@ public class MarkdownGlobalSummary {
         int i = 0;
         for (VirtualFile file : mdFiles) {
             PsiFile md = PsiManager.getInstance(project).findFile(file);
-            markdowns[i++] = new MarkdownSummary(md);
+            MarkdownVisitor visitor = new MarkdownVisitor();
+            markdowns[i++] = new MarkdownSummary(md, visitor);
         }
     }
 

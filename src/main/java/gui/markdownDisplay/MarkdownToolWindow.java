@@ -5,22 +5,20 @@ import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowAnchor;
 import com.intellij.openapi.wm.ToolWindowManager;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiMethod;
 import com.intellij.ui.JBSplitter;
 import com.intellij.ui.components.JBScrollPane;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import com.intellij.ui.table.JBTable;
-import com.intellij.ui.tree.Navigatable;
 import com.intellij.util.ui.ListTableModel;
 import core.markdownStats.LinkSummary;
 import core.markdownStats.MarkdownGlobalSummary;
 import core.markdownStats.MarkdownSummary;
 
-import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import javax.swing.*;
 
 /**
  * This is the graphical report of the method statistics plugin.
@@ -46,11 +44,13 @@ public class MarkdownToolWindow {
         generateMarkdownTable(summary.getMarkdowns(), splitterPane);
 
         Content content;
-        if ((content = toolWindow.getContentManager().findContent(summary.getProject().getName())) != null) {
+        if ((content = toolWindow.getContentManager()
+                .findContent(summary.getProject().getName())) != null) {
             content.setComponent(splitterPane);
         } else {
             ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
-            content = contentFactory.createContent(splitterPane, summary.getProject().getName(), false);
+            content = contentFactory.createContent(splitterPane,
+                    summary.getProject().getName(), false);
             toolWindow.getContentManager().addContent(content);
         }
         toolWindow.getContentManager().setSelectedContent(content);

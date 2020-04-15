@@ -4,7 +4,6 @@ import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiMethod;
 import gui.methodDisplay.ChartFactory;
 
-
 import java.util.Comparator;
 
 import java.util.Arrays;
@@ -54,26 +53,26 @@ public class ClassSummary {
     }
 
     /**
-     *
-     * @return the panel with pie charts
+     * Getter for the pie charts.
+     * @return the panel with pie charts.
      */
     public JPanel getChartsPanel() {
         return chartsPanel;
     }
 
     /**
-     *
+     * Getter for the method summaries.
      * @return list of method summaries in this class.
      */
     public List<MethodSummary> getMethodsList() {
         return Arrays.asList(methods);
     }
 
-    public void removeDuplicates (MethodSummary[] methods) {
+    public void removeDuplicates(MethodSummary[] methods) {
         Arrays.sort(methods, Comparator.comparing(method -> method.getName()));
         int c = 1;
         String name = "";
-        for(MethodSummary method: methods) {
+        for (MethodSummary method: methods) {
             if (name.equals(method.getName())) {
                 method.setName(method.getName() + " (" + c + ")");
                 c++;

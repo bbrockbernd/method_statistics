@@ -2,9 +2,9 @@ package gui.markdownDisplay;
 
 import com.intellij.util.ui.ColumnInfo;
 import core.markdownStats.MarkdownSummary;
+import java.util.Comparator;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Comparator;
 
 /**
  * All the column properties of the gui table are defined here.
@@ -26,6 +26,7 @@ class MarkdownColumnInfoFactory {
             new BlockQuoteInfo()
         };
     }
+
     static class NameInfo extends ColumnInfo<MarkdownSummary, String> {
 
         public NameInfo() {
@@ -44,6 +45,7 @@ class MarkdownColumnInfoFactory {
             return Comparator.comparing(o -> o.getName());
         }
     }
+
     static class LinksInfo extends ColumnInfo<MarkdownSummary, String> {
 
         public LinksInfo() {
@@ -62,6 +64,7 @@ class MarkdownColumnInfoFactory {
             return Comparator.comparingInt(o -> o.getLinks().size());
         }
     }
+
     static class ImageInfo extends ColumnInfo<MarkdownSummary, String> {
 
         public ImageInfo() {
@@ -80,6 +83,7 @@ class MarkdownColumnInfoFactory {
             return Comparator.comparingInt(o -> o.getNumberOfImages());
         }
     }
+
     static class ParagraphInfo extends ColumnInfo<MarkdownSummary, String> {
 
         public ParagraphInfo() {
@@ -98,6 +102,7 @@ class MarkdownColumnInfoFactory {
             return Comparator.comparingInt(o -> o.getNumberOfParagraphs());
         }
     }
+
     static class HeaderInfo extends ColumnInfo<MarkdownSummary, String> {
 
         public HeaderInfo() {
@@ -116,6 +121,7 @@ class MarkdownColumnInfoFactory {
             return Comparator.comparingInt(o -> o.getHeaders());
         }
     }
+
     static class TableHeaderInfo extends ColumnInfo<MarkdownSummary, String> {
 
         public TableHeaderInfo() {
@@ -134,6 +140,7 @@ class MarkdownColumnInfoFactory {
             return Comparator.comparingInt(o -> o.getTableHeaders());
         }
     }
+
     static class BlockQuoteInfo extends ColumnInfo<MarkdownSummary, String> {
 
         public BlockQuoteInfo() {
